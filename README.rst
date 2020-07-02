@@ -9,7 +9,7 @@ Email: mat64@cam.ac.uk and lh605@cam.ac.uk
 
 Supervisor : Dr. A. Bender
 
-Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity data from PubChem_ (extracted Mar 2020) and ChEMBL_ (version 26), using the RDKit_ and Scikit-learn_, which employ a modification of the reliability-density neighbourhood Applicability Domain (AD) analysis by Aniceto [1]_. This project is the sucessor to PIDGIN `version 1`_ [2]_ and PIDGIN `version 2`_ [3]_. Target prediction with extended NCBI pathway and DisGeNET disease enrichment calculation is available as implemented in [4]_.
+Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity data from PubChem_ (extracted Mar 2020) and ChEMBL_ (version 26), using the RDKit_ and Scikit-learn_, which employ a modification of the reliability-density neighbourhood Applicability Domain (AD) analysis by Aniceto [1]_. This project is the sucessor to PIDGIN `version 1`_ [2]_ and PIDGIN `version 2`_ [3]_. This is the updated and retrained version of PIDGIN `version 3`_ Target prediction with extended NCBI pathway and DisGeNET disease enrichment calculation is available as implemented in [4]_.
 
 * Molecular Descriptors : `2048bit Rdkit Extended Connectivity FingerPrints`_ (ECFP) [5]_
 * Algorithm: `Random Forests`_ with dynamic number of trees (see docs for details), class weight = 'balanced', sample weight = ratio Inactive:Active
@@ -24,15 +24,15 @@ Details for sizes across all activity cut-off's:
 +------------------------------------------------+-------------------------+---------------------------+
 |                                                | Without orthologues     | With orthologues          |
 +================================================+=========================+===========================+
-| Distinct Models                                | 10,446                  | 14,678                    |
+| Distinct Models                                | x                       | x                         |
 +------------------------------------------------+-------------------------+---------------------------+
-| Distinct Targets [exhaustive total]            | 7,075 [7,075]           | 16,623 [60,437]           |
+| Distinct Targets [exhaustive total]            | x                       | x                         |
 +------------------------------------------------+-------------------------+---------------------------+
-| Total Bioactivities Over all models            | 39,424,168              | 398,340,769               |
+| Total Bioactivities Over all models            | x                       | x                         |
 +------------------------------------------------+-------------------------+---------------------------+
-| Actives                                        | 3,204,038               | 35,009,629                |
+| Actives                                        | x                       | x                         |
 +------------------------------------------------+-------------------------+---------------------------+
-| Inactives [Of which are Sphere Exclusion (SE)] | 36,220,130 [27,435,133] | 363,331,140 [248,782,698] |
+| Inactives [Of which are Sphere Exclusion (SE)] | x                       | x                         |
 +------------------------------------------------+-------------------------+---------------------------+
 
 Full details on all models are provided in the uniprot_information.txt files in the orthologue and no_orthologue directories
@@ -62,7 +62,7 @@ IMPORTANT
 License
 -------
 
-PIDGINv3 is available under the `GNU General Public License v3.0
+PIDGINv4 is available under the `GNU General Public License v3.0
 <https://www.gnu.org/licenses/gpl.html>`_ (GPLv3).
 
 
@@ -83,6 +83,7 @@ References
 .. _Scikit-learn: http://scikit-learn.org/
 .. _version 1: https://github.com/lhm30/PIDGIN
 .. _version 2: https://github.com/lhm30/PIDGINv2
+.. _version 2: https://github.com/lhm30/PIDGINv3
 .. _no_ortho.zip : https://tinyurl.com/no-ortho
 .. _https://tinyurl.com/no-ortho : https://tinyurl.com/no-ortho
 .. _2048bit Rdkit Extended Connectivity FingerPrints: http://www.rdkit.org/docs/GettingStartedInPython.html#morgan-fingerprints-circular-fingerprints
