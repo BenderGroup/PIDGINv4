@@ -109,7 +109,7 @@ References
 .. _flatkinson standardiser: https://github.com/flatkinson/standardiser
 .. _models.zip: 
 .. |license| image:: https://img.shields.io/badge/license-GPLv3-blue.svg
-   :target: https://github.com/lhm30/PIDGINv3/blob/master/LICENSE.txt
+   :target: https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE.txt
 .. |docstatus| image:: https://readthedocs.org/projects/pidginv3/badge/?version=latest
    :target: https://pidginv3.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
