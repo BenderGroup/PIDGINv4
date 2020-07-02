@@ -19,20 +19,20 @@ Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity d
 * Disease information from `DisGeNET`_
 * Target/pathway/disease enrichment calculated using Fisher's exact test and the Chi-squared test
 
-Details for sizes across all activity cut-off's:
+Details for sizes across all activity cut-offs:
 
 +------------------------------------------------+-------------------------+---------------------------+
 |                                                | Without orthologues     | With orthologues          |
 +================================================+=========================+===========================+
-| Distinct Models                                | x                       | x                         |
+| Distinct Models                                | 11,782                  | 16,772                    |
 +------------------------------------------------+-------------------------+---------------------------+
-| Distinct Targets [exhaustive total]            | x                       | x                         |
+| Distinct Targets [exhaustive total]            | 3,698 [11,782]          | 17,021 [63,140]           |
 +------------------------------------------------+-------------------------+---------------------------+
-| Total Bioactivities Over all models            | x                       | x                         |
+| Total Bioactivities Over all models            | 50,210,041              | 437,574,005               |
 +------------------------------------------------+-------------------------+---------------------------+
-| Actives                                        | x                       | x                         |
+| Actives                                        | 4,079,996               | 4,087,155                 |
 +------------------------------------------------+-------------------------+---------------------------+
-| Inactives [Of which are Sphere Exclusion (SE)] | x                       | x                         |
+| Inactives [Of which are Sphere Exclusion (SE)] | 46,130,045 [35,119,663] | 463,237,781 [314,117,438] |
 +------------------------------------------------+-------------------------+---------------------------+
 
 Full details on all models are provided in the uniprot_information.txt files in the orthologue and no_orthologue directories
