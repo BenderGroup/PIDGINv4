@@ -1,6 +1,6 @@
-.. pidginv3 documentation master file
+.. pidginv4 documentation master file
 
-Prediction IncluDinG INactivity (PIDGIN) Version 3
+Prediction IncluDinG INactivity (PIDGIN) Version 4
 ==================================================
 
 :Release: |version|
@@ -8,7 +8,7 @@ Prediction IncluDinG INactivity (PIDGIN) Version 3
 
 |License|	|betarelease|
 
-Author : Lewis Mervin, lewis.mervin@cantab.net
+Author : Lewis Mervin, lewis.mervin@cantab.net, Layla Hosseini-Gerami, Maria-Anna Trapotsi
 
 Supervisor : Dr. A. Bender
 
