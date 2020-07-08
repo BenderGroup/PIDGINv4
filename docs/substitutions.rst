@@ -10,8 +10,9 @@
 .. _Scikit-learn: http://scikit-learn.org/
 .. _version 1: https://github.com/lhm30/PIDGIN
 .. _version 2: https://github.com/lhm30/PIDGINv2
-.. _no_ortho.zip : https://drive.google.com/file/d/1D-iHmdRncTOImh68B54mEHkUvo5CHJVk/view
-.. _ortho.zip : https://drive.google.com/file/d/1CijRrJaAxIFcRWZHX314NYUPBTIwMPG7/view
+.. _version 3: https://github.com/lhm30/PIDGINv3
+.. _no_ortho.zip :  https://tinyurl.com/pidgin4-no-ortho
+.. _ortho.zip :  https://tinyurl.com/pidgin4-ortho
 .. _2048bit Rdkit Extended Connectivity FingerPrints: http://www.rdkit.org/docs/GettingStartedInPython.html#morgan-fingerprints-circular-fingerprints
 .. _NCBI BioSystems: https://www.ncbi.nlm.nih.gov/Structure/biosystems/docs/biosystems_about.html
 .. _DisGeNET: http://www.disgenet.org/web/DisGeNET/menu/dbinfo
@@ -30,15 +31,15 @@
 .. |rogers| replace:: Rogers D & Hahn M. Extended-connectivity fingerprints. *J. Chem. Inf. Model.* **50**: 742-54 (2010) |rogers_doi|
 .. |rogers_doi| image:: https://img.shields.io/badge/doi-10.1021/ci100050t-blue.svg
     :target: http://dx.doi.org/10.1021/ci100050t
-.. _GitHub: https://github.com/lhm30/PIDGINv3
+.. _GitHub: https://github.com/BenderGroup/PIDGINv4
 .. _flatkinson standardiser: https://github.com/flatkinson/standardiser
 .. _models.zip: 
 .. |license| image:: https://img.shields.io/badge/license-GPLv3-blue.svg
-   :target: https://github.com/lhm30/PIDGINv3/blob/master/LICENSE
+   :target: https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE
 .. |license_long| replace:: `GNU Lesser General Public License version 3.0`_
-.. _GNU Lesser General Public License version 3.0: https://github.com/lhm30/PIDGINv3/blob/master/LICENSE
-.. _issue tracker: https://github.com/lhm30/PIDGINv3/issues
-.. _ReadTheDocs: http://pidginv3.readthedocs.io
+.. _GNU Lesser General Public License version 3.0: https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE
+.. _issue tracker: https://github.com/BenderGroup/PIDGINv4/issues
+.. _ReadTheDocs: http://pidginv4.readthedocs.io
 .. |betarelease| image:: https://zenodo.org/badge/142870938.svg
    :target: https://zenodo.org/badge/latestdoi/142870938
 .. _E3FP: https://github.com/keiserlab/e3fp
