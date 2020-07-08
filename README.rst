@@ -83,9 +83,9 @@ References
 .. _Scikit-learn: http://scikit-learn.org/
 .. _version 1: https://github.com/lhm30/PIDGIN
 .. _version 2: https://github.com/lhm30/PIDGINv2
-.. _version 2: https://github.com/lhm30/PIDGINv3
-.. _no_ortho.zip : https://tinyurl.com/no-ortho
-.. _https://tinyurl.com/no-ortho : https://tinyurl.com/no-ortho
+.. _version 3: https://github.com/lhm30/PIDGINv3
+.. _ortho.zip : https://tinyurl.com/pidgin4-ortho
+.. _no_ortho.zip : https://tinyurl.com/pidgin4-no-ortho
 .. _2048bit Rdkit Extended Connectivity FingerPrints: http://www.rdkit.org/docs/GettingStartedInPython.html#morgan-fingerprints-circular-fingerprints
 .. _NCBI BioSystems: https://www.ncbi.nlm.nih.gov/Structure/biosystems/docs/biosystems_about.html
 .. _DisGeNET: http://www.disgenet.org/web/DisGeNET/menu/dbinfo
@@ -104,8 +104,8 @@ References
 .. |rogers| replace:: Rogers D & Hahn M. Extended-connectivity fingerprints. *J. Chem. Inf. Model.* **50**: 742-54 (2010). |rogers_doi|
 .. |rogers_doi| image:: https://img.shields.io/badge/doi-10.1021/ci100050t-blue.svg
     :target: http://dx.doi.org/10.1021/ci100050t
-.. _GitHub: https://github.com/lhm30/PIDGINv3
-.. _Readthedocs: https://pidginv3.readthedocs.io/en/latest/
+.. _GitHub: https://github.com/BenderGroup/PIDGINv4
+.. _Readthedocs: https://pidginv4.readthedocs.io/en/latest/
 .. _flatkinson standardiser: https://github.com/flatkinson/standardiser
 .. _models.zip: 
 .. |license| image:: https://img.shields.io/badge/license-GPLv3-blue.svg
