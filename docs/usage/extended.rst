@@ -74,5 +74,5 @@ Example of how to run the code:
 
 	$ python $PV4/predict.py -f test.smi --organism 'Mus musculus' -n 4 -b 100 --ortho
 
-which would provide Tc similarity results for the compounds in test.smi file for 'Mus musculus' organism with a 100μM cut-off including orthologue data and 4 cores.
+which would provide Tc similarity results for the compounds in test.smi file for 'Mus musculus' organism with a 100μM cut-off including orthologue data and using 4 cores for the calculation.
 
