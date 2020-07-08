@@ -1,7 +1,7 @@
 Enrichment Predictions
 ======================
 
-This tutorial assumes the PIDGINv3 repository is located at ``$PV3`` and is concerned with
+This tutorial assumes the PIDGINv4 repository is located at ``$PV4`` and is concerned with
 the script ``predict_enriched.py``
 
 This script calculates target prediction enrichment (using Fishers' t-test) between two
@@ -40,7 +40,7 @@ To see all available options, run
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict_enriched.py -h
+	$ python $PV4/predict_enriched.py -h
 	Usage: predict_enriched.py [options]
 
 	Options:
@@ -119,7 +119,7 @@ the non-toxic compounds.
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict_enriched.py --f1 cytotox_library.smi --f2 nontoxic_background.smi --organism "Bos taurus" -b 1 -p 0.45 --ad 30 -n 4
+	$ python $PV4/predict_enriched.py --f1 cytotox_library.smi --f2 nontoxic_background.smi --organism "Bos taurus" -b 1 -p 0.45 --ad 30 -n 4
 
 Three files are output for the target, pathway and disease enrichment calculations, with 
 the naming convention: 
@@ -165,7 +165,7 @@ For example, the following code:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict_enriched.py --f1 cytotox_library.smi --f2 nontoxic_background.smi --organism Drosophila -b 100 --known_flag --ad 0 -n 4 -p 0.8 --min_size 50 --se_filter --performance_filter l50po,bedroc,0.8
+	$ python $PV4/predict_enriched.py --f1 cytotox_library.smi --f2 nontoxic_background.smi --organism Drosophila -b 100 --known_flag --ad 0 -n 4 -p 0.8 --min_size 50 --se_filter --performance_filter l50po,bedroc,0.8
 	
 would filter for Drosophila models that did not require Sphere Exlusion (SE) (i.e. sufficient number of inactives available) and a minimum number of 50 actives in the training set, with a minimum BEDROC performance of 0.8 for leave out 50% of ChEMBL publications from training data over 4-fold cross validation (L50PO), to produce enrichment predictions at a 0.8 probability cut-off at a threshold of 100μM, with the Applicability Domain (AD) filter silenced and where known activities (in ChEMBL or PubChem) are set.
 
