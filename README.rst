@@ -59,8 +59,7 @@ IMPORTANT
 *	Molecules are automatically  standardized when running models (can be turned off)
 *	Do not modify the 'pkls', 'ad_data' etc. names or directories
 *	Files in the examples directory are included for testing as on the ReadtheDocs_ tutorials.
-*	For installation and usage instructions, see the `documentation <http://pidginv3.readthedocs.io>`_.
-
+*	For installation and usage instructions, see the `documentation <https://pidginv4.readthedocs.io/>`_.
 
 License
 -------
