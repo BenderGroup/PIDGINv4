@@ -110,8 +110,8 @@ References
 .. _models.zip: 
 .. |license| image:: https://img.shields.io/badge/license-GPLv3-blue.svg
    :target: https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE
-.. |docstatus| image:: https://readthedocs.org/projects/pidginv3/badge/?version=latest
-   :target: https://pidginv3.readthedocs.io/en/latest/?badge=latest
+.. |docstatus| image:: https://readthedocs.org/projects/pidginv4/badge/?version=latest
+   :target: https://pidginv4.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 .. |betarelease| image:: https://zenodo.org/badge/142870938.svg
    :target: https://zenodo.org/badge/latestdoi/142870938
