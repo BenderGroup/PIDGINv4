@@ -30,7 +30,7 @@ Follow these steps on Linux/OSX:
 
 * N.B. Installs the IMI eTOX `flatkinson standardiser`_ (replaces ChemAxon's standardizer used in previous PIDGIN versions) and statsmodels for p-value correction in predict_enriched.py
 
-3. Now run: ``source activate pidgin3_env`` (This activates the PIDGINv4 virtual environment. N.B This is required for each new terminal session in order to run PIDGIN in the future)
+3. Now run: ``source activate pidgin4_env`` (This activates the PIDGINv4 virtual environment. N.B This is required for each new terminal session in order to run PIDGIN in the future)
 
 4. Navigate the directory you wish to install PIDGINv4 and in Mac/Linux terminal run ``git clone https://github.com/BenderGroup/PIDGINv4.git`` (recommended) or download/extract the zip from `GitHub`_ webpage (not recommended due to inability to pull updates)
 
