@@ -1,7 +1,7 @@
 Extended functionality
 ======================
 
-This tutorial assumes the PIDGINv3 repository is located at ``$PV3``.
+This tutorial assumes the PIDGINv4 repository is located at ``$PV4``.
 	  
 The input file named ``test.smi`` is used for these examples
 
@@ -17,7 +17,7 @@ transposed file:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" -b 10 --transpose
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" -b 10 --transpose
 	
 This script outputs the RF output from each of the Random Forest classifiers across the
 targets for the all compounds into a probability matrix, where the rows are compounds
@@ -33,7 +33,7 @@ trees in the forests across the filtered targets:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --ntrees 250 --target_class Ligase --std_dev
+	$ python $PV4/predict.py -f test.smi --ntrees 250 --target_class Ligase --std_dev
 
 .. note::
 	The max number of trees when generating the models was set to 250. An algorithm to
@@ -54,7 +54,7 @@ this functionality use the following snippet:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism Drosophila -b 100 --known_flag
+	$ python $PV4/predict.py -f test.smi --organism Drosophila -b 100 --known_flag
 	
 which would provide predictions for all Drosophila targets with a 100μM cut-off, and would
 calculate overlap between input compounds and the training set and annotate these instead
@@ -73,7 +73,7 @@ Example of how to run the code:
 
 .. code-block:: shell-session
 
-	$ python $PV4/predict.py -f test.smi --organism 'Mus musculus' -n 4 -b 100 --ortho
+	$ python $PV4/sim_to_train.py -f test.smi --organism 'Mus musculus' -n 4 -b 100 --ortho
 
 which would provide Tc similarity results for the compounds in test.smi file for 'Mus musculus' organism with a 100μM cut-off including orthologue data and using 4 cores for the calculation.
 .. note::
