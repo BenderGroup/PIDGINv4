@@ -1,4 +1,4 @@
-name: pidgin3_env
+name: pidgin4_env
 channels:
   - rdkit
   - conda-forge
@@ -84,5 +84,5 @@ dependencies:
     - pymysql==0.9.3
     - standardiser==0.1.9
     - statsmodels==0.10.2
-prefix: /scratch/mat64/.conda/envs/pidgin3_env
+prefix: /scratch/mat64/.conda/envs/pidgin4_env
 
