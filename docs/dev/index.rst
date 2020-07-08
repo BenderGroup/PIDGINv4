@@ -1,7 +1,7 @@
 Developer Notes
 ===============
 
-Contributions to PIDGINv3 are welcome.
+Contributions to PIDGINv4 are welcome.
 
 The following documentation is designed to aid
 developers contribute code and new functionaility.
