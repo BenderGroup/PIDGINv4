@@ -1,9 +1,9 @@
 Command Line Arguments
 ======================
 
-PIDGINv3 uses a Command Line Interface (CLI) for all available functionality.
+PIDGINv4 uses a Command Line Interface (CLI) for all available functionality.
 
-This tutorial assumes the PIDGINv3 repository is located at ``$PV3``.
+This tutorial assumes the PIDGINv4 repository is located at ``$PV4``.
 
 List of available arguments
 ---------------------------
@@ -12,7 +12,7 @@ To see all available options, run
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -h
+	$ python $PV4/predict.py -h
 	Usage: predict.py [options]
 
 	Options:
@@ -74,7 +74,7 @@ Detailed explanations for the more complicated arguments
 SMILES options (-d / --smiles_column / --smiles_id_column)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PIDGINv3 interprets SMILES files (``*.smi`` or ``*.smiles``) using the conventional
+PIDGINv4 interprets SMILES files (``*.smi`` or ``*.smiles``) using the conventional
 `OpenSMILES specification <http://opensmiles.org/opensmiles.html>`_ §4.5), comprising a
 first column of smiles separated by a white line ``( )`` character and additional entries
 as identifiers.
@@ -104,11 +104,11 @@ commands:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test2.smi -d ',' --smiles_column 1 --smiles_id_column 0
+	$ python $PV4/predict.py -f test2.smi -d ',' --smiles_column 1 --smiles_id_column 0
 	
 
 .. note::
-	PIDGINv3 generates a warning message for any user input files which are neither
+	PIDGINv4 generates a warning message for any user input files which are neither
 	``*.smi`` / ``*.smi`` or ``*.sdf``, and will interpret any other file as a SMILES.
 
 Transpose options (-t)
@@ -135,7 +135,7 @@ p(activity) indicates a degree of confidence in predictions when binarizing prob
 Applicability domain threshold (--ad / --percentile)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PIDGINv3 applies the reliability-density neighbourhood Applicability Domain (AD) analysis 
+PIDGINv4 applies the reliability-density neighbourhood Applicability Domain (AD) analysis 
 by Aniceto et al., from: doi.org/10.1186/s13321-016-0182-y.
 
 In this procedure, three parameters are calculated on a per-compound basis across the 
@@ -185,7 +185,7 @@ recommended):
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test2.smi -d ',' --smiles_column 1 --smiles_id_column 0 --ad 0
+	$ python $PV4/predict.py -f test2.smi -d ',' --smiles_column 1 --smiles_id_column 0 --ad 0
 
 If a user would like to obtain a matrix comprising the percentile weights for each of the
 input compounds, then the command line argument ``--percentile`` can be used.
@@ -225,7 +225,7 @@ of 0.5 during TSSCV:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --ad 0 --performance_filter tsscv,bedroc,0.5 
+	$ python $PV4/predict.py -f test.smi --ad 0 --performance_filter tsscv,bedroc,0.5 
 
 
 Incorporating training log with predictions (--training_log)
@@ -296,12 +296,12 @@ command:
 Turning off pre-processing (--preprocess_off)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PIDGINv3 implements a pre-processing feature which is turned on by default, to ensure all
+PIDGINv4 implements a pre-processing feature which is turned on by default, to ensure all
 input molecules are standardised using the flatkinson (eTox) standardiser 
 (github.com/flatkinson/standardiser), and that any molecules outside the applicability
 domain of the models, defined by the chemical property filters imposed on
 ChEMBL and PubChem training data [size filter 100 >= Mw >= 1000 / organic mol check
-(Carbon count >= 1)] are removed. This functionality can be turned off to force PIDGINv3 
+(Carbon count >= 1)] are removed. This functionality can be turned off to force PIDGINv4 
 to give unreliable predictions (in cases when the input space maybe outside the domain of
 applicability or when molecules have been pre-standardised) using the following command:
 
