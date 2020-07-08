@@ -70,9 +70,17 @@ Similarity of input compounds to the active compounds in the training set
 
 The sim_to_train.py script conducts Tanimoto coefficient (Tc) similarity analysis for input compounds in test.smi and the active compounds in the training data in PIDGIN. This can be used to support prediction interpretation to indicate which compounds are driving predictions. Two files are produced; The first is a matrix similar to the predict_raw script above, which has a similarity matrix of compounds vs. target instead of the raw predictions. The second is a detailed breakdown of the nearest neighbour compounds in the training set (i.e. their affinity, confidence and which organism this is extracted from - since ortholog bioactivity data is also used).
 Example of how to run the code:
+
 .. code-block:: shell-session
 
 	$ python $PV4/predict.py -f test.smi --organism 'Mus musculus' -n 4 -b 100 --ortho
 
 which would provide Tc similarity results for the compounds in test.smi file for 'Mus musculus' organism with a 100μM cut-off including orthologue data and using 4 cores for the calculation.
+.. note::
+	Options available for this calculation:
+	- selection of orthologue data
+	- type of organism
+	- bioactivity threshold (0.1, 1, 10 or 100 μM)
+	- number of cores 
+	For more information about specifying the command Line Arguments see 'Command Line Arguments' section
 
