@@ -8,8 +8,6 @@ Author : Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin
 Email: mat64@cam.ac.uk and lh605@cam.ac.uk
 
 Supervisor : Dr. A. Bender
-https://tinyurl.com/pidgin4-no-ortho
-https://tinyurl.com/pidgin4-ortho
 
 
 Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity data from PubChem_ (extracted Mar 2020) and ChEMBL_ (version 26), using the RDKit_ and Scikit-learn_, which employ a modification of the reliability-density neighbourhood Applicability Domain (AD) analysis by Aniceto [1]_. This project is the sucessor to PIDGIN `version 1`_ [2]_ and PIDGIN `version 2`_ [3]_. This is the updated and retrained version of PIDGIN `version 3`_ Target prediction with extended NCBI pathway and DisGeNET disease enrichment calculation is available as implemented in [4]_.
