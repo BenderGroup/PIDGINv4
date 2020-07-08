@@ -8,7 +8,7 @@ Prediction IncluDinG INactivity (PIDGIN) Version 4
 
 |License|	|betarelease|
 
-Author : Lewis Mervin, lewis.mervin@cantab.net, Layla Hosseini-Gerami, Maria-Anna Trapotsi
+Author : Lewis Mervin (lewis.mervin@cantab.net), Layla Hosseini-Gerami (lh605@cam.ac.uk), Maria-Anna Trapotsi (mat64@cam.ac.uk)
 
 Supervisor : Dr. A. Bender
 
