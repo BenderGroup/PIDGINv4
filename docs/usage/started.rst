@@ -1,7 +1,7 @@
 Getting started
 ===============
 
-This tutorial assumes the PIDGINv3 repository is located at ``$PV3``.
+This tutorial assumes the PIDGINv4 repository is located at ``$PV4``.
 
 Generating predictions for human targets
 ----------------------------------------
@@ -18,7 +18,7 @@ the input file:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" -b 1
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" -b 1
 	
 This script outputs the RF output from each of the Random Forest classifiers across the
 targets for the all compounds into a probability matrix, where the columns are compounds
@@ -37,7 +37,7 @@ at a threshold of 0.5 (the compound was more often predicted active compared to 
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" -b 0.1,1 -p 0.5
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" -b 0.1,1 -p 0.5
 
 The threshold can be increased to increase the confidence in the prediction.
 
@@ -53,7 +53,7 @@ reduced, as in the following snippet:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" -b 1 -p 0.5 --ad 60
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" -b 1 -p 0.5 --ad 60
 	
 In this case, the threshold for the applicability domain weights calculated across the
 targets has been reduced from 90% to 60%, and thus compounds that are further from the
@@ -69,7 +69,7 @@ to re-run predictions:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" -b 1 --percentile
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" -b 1 --percentile
 
 Silencing the AD filter
 -----------------------
@@ -79,7 +79,7 @@ accepted:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" -b 1 --ad 0
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" -b 1 --ad 0
 
 Combining model filters
 -----------------------
@@ -89,13 +89,13 @@ following can be used:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" --target_class Lipase
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" --target_class Lipase
 	
 Filters can be combined, for instance:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Homo sapiens" --target_class GPCR --min_size 25 --performance_filter tsscv,prauc,0.7
+	$ python $PV4/predict.py -f test.smi --organism "Homo sapiens" --target_class GPCR --min_size 25 --performance_filter tsscv,prauc,0.7
 	
 would filter human models for GPCRs with a minimum number of 25 actives in the training
 set and with a minimum precision-recall AUC (PR-AUC) performance of 0.7 during time-series
@@ -105,7 +105,7 @@ Additional criteria can be added, for instance:
 
 .. code-block:: shell-session
 
-	$ python $PV3/predict.py -f test.smi --organism "Rattus" -b 0.1,1 -p 0.5 --min_size 50 --se_filter --performance_filter l50po,bedroc,0.8
+	$ python $PV4/predict.py -f test.smi --organism "Rattus" -b 0.1,1 -p 0.5 --min_size 50 --se_filter --performance_filter l50po,bedroc,0.8
 	
 would filter rat models that did not require Sphere Exclusion (SE) (i.e. sufficient number
 of inactives available) and a minimum number of 50 actives in the training set, with a
