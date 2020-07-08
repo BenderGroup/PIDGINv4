@@ -2,7 +2,7 @@ Usage and Examples
 ==================
 
 
-To facilitate the use of PIDGINv3, examples of usage are provided below,
+To facilitate the use of PIDGINv4, examples of usage are provided below,
 ordered by expected frequency of use and increasing complexity.
 
 .. toctree::
