@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Overview of PIDGINv4 &#8212; PIDGINv4 v4.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup and Installation" href="install.html" />
+    <link rel="prev" title="Prediction IncluDinG INactivity (PIDGIN) Version 4" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="overview-of-pidginv4">
+<h1>Overview of PIDGINv4<a class="headerlink" href="#overview-of-pidginv4" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Protein target prediction using <a class="reference external" href="http://scikit-learn.org/0.19/modules/generated/sklearn.ensemble.RandomForestClassifier.html">Random Forests</a> (RFs) trained on bioactivity data from <a class="reference external" href="https://pubchem.ncbi.nlm.nih.gov/">PubChem</a> (extracted Mar 2020) and <a class="reference external" href="https://www.ebi.ac.uk/chembl/">ChEMBL</a> (version 26), using the <a class="reference external" href="http://www.rdkit.org">RDKit</a> and <a class="reference external" href="http://scikit-learn.org/">Scikit-learn</a>, which employ a modification of the reliability-density neighbourhood Applicability Domain (AD) analysis by Aniceto <a class="footnote-reference" href="#id8" id="id1">[1]</a>. This project is the sucessor to PIDGIN <a class="reference external" href="https://github.com/lhm30/PIDGIN">version 1</a> <a class="footnote-reference" href="#id9" id="id2">[2]</a> and PIDGIN <a class="reference external" href="https://github.com/lhm30/PIDGINv2">version 2</a> <a class="footnote-reference" href="#id10" id="id3">[3]</a>. This is the updated and retrained version of PIDGIN <a class="reference external" href="https://github.com/lhm30/PIDGINv3">version 3</a> Target prediction with extended NCBI pathway and DisGeNET disease enrichment calculation is available as implemented in <a class="footnote-reference" href="#id11" id="id4">[4]</a>.</p>
+<ul class="simple">
+<li>Molecular Descriptors : <a class="reference external" href="http://www.rdkit.org/docs/GettingStartedInPython.html#morgan-fingerprints-circular-fingerprints">2048bit RDKit Extended Connectivity FingerPrints</a> (ECFP) <a class="footnote-reference" href="#id12" id="id5">[5]</a></li>
+<li>Algorithm: <a class="reference external" href="http://scikit-learn.org/0.19/modules/generated/sklearn.ensemble.RandomForestClassifier.html">Random Forests</a> with dynamic number of trees (see docs for details), class weight = ‘balanced’, sample weight = ratio Inactive:Active</li>
+<li>Models generated at four different cut-off’s: 100μM, 10μM, 1μM and 0.1μM</li>
+<li>Models generated both with and without mapping to orthologues</li>
+<li>Pathway information from <a class="reference external" href="https://www.ncbi.nlm.nih.gov/Structure/biosystems/docs/biosystems_about.html">NCBI BioSystems</a></li>
+<li>Disease information from <a class="reference external" href="http://www.disgenet.org/web/DisGeNET/menu/dbinfo">DisGeNET</a></li>
+<li>Target/pathway/disease enrichment calculated using Fisher’s exact test and the Chi-squared test</li>
+</ul>
+<p>Details for sizes across all activity cut-off’s:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="48%" />
+<col width="25%" />
+<col width="27%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Without orthologues</th>
+<th class="head">With orthologues</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Distinct Models</td>
+<td>11,782</td>
+<td>16,772</td>
+</tr>
+<tr class="row-odd"><td>Distinct Targets [exhaustive total]</td>
+<td>3,698 [11,782]</td>
+<td>17,021 [63,140]</td>
+</tr>
+<tr class="row-even"><td>Total Bioactivities Over all models</td>
+<td>50,210,041</td>
+<td>437,574,005</td>
+</tr>
+<tr class="row-odd"><td>Actives</td>
+<td>4,079,996</td>
+<td>4,087,155</td>
+</tr>
+<tr class="row-even"><td>Inactives [Of which are Sphere Exclusion (SE)]</td>
+<td>46,130,045 [35,119,663]</td>
+<td>463,237,781 [314,117,438]</td>
+</tr>
+</tbody>
+</table>
+<p>Full details on all models are provided in the uniprot_information.txt files in the ortho and no_ortho directories (to be downloaded)</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Development occurs on <a class="reference external" href="https://github.com/BenderGroup/PIDGINv4">GitHub</a>.
+Documentation on <a class="reference external" href="http://pidginv4.readthedocs.io">Readthedocs</a>.
+Contributions, feature requests, and bug reports are welcome.
+Consult the <a class="reference external" href="https://github.com/BenderGroup/PIDGINv4/issues">issue tracker</a>.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>PIDGINv4 is released under the <a class="reference external" href="https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE">GNU Lesser General Public License version 3.0</a> (<a class="reference external" href="https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-GPLv3-blue.svg" /></a>).</p>
+<p>Broadly, this means PIDGINv4 can be used in any manner without modification,
+with proper attribution. Modification of source code must also be released
+under <a class="reference external" href="https://github.com/BenderGroup/PIDGINv4/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-GPLv3-blue.svg" /></a> so that the community may benefit.</p>
+</div>
+<div class="section" id="citing-pidgin">
+<h2>Citing PIDGIN<a class="headerlink" href="#citing-pidgin" title="Permalink to this headline">¶</a></h2>
+<p>To cite PIDGINv4, please reference either previous versions <a class="footnote-reference" href="#id9" id="id6">[2]</a> <a class="footnote-reference" href="#id10" id="id7">[3]</a> or use <a class="reference external" href="https://zenodo.org/badge/latestdoi/142870938"><img alt="betarelease" src="https://zenodo.org/badge/142870938.svg" /></a>.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Aniceto, N, et al. A novel applicability domain technique for mapping predictive reliability across the chemical space of a QSAR: Reliability-density neighbourhood. <em>J. Cheminform.</em> <strong>8</strong>: 69 (2016) <a class="reference external" href="https://doi.org/10.1186/s13321-016-0182-y"><img alt="aniceto_doi" src="https://img.shields.io/badge/doi-10.1186%2Fs13321--016--0182--y-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id6">2</a>)</em> Mervin, L H., et al. Target prediction utilising negative bioactivity data covering large chemical space. <em>J. Cheminform.</em> <strong>7</strong>: 51 (2015) <a class="reference external" href="https://doi.org/10.1186/s13321-015-0098-y"><img alt="mervin2015_doi" src="https://img.shields.io/badge/doi-10.1186%2Fs13321--015--0098--y-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id7">2</a>)</em> Mervin, L H., et al. Orthologue chemical space and its influence on target prediction. <em>Bioinformatics.</em> <strong>34</strong>: 72–79 (2018) <a class="reference external" href="https://doi.org/10.1093/bioinformatics/btx525"><img alt="mervin2018_doi" src="https://img.shields.io/badge/doi-10.1093%2Fbioinformatics%2Fbtx525-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Mervin, L H., et al. Understanding Cytotoxicity and Cytostaticity in a High-Throughput Screening Collection. <em>ACS Chem. Biol.</em> <strong>11</strong>: 11 (2016) <a class="reference external" href="https://doi.org/10.1021/acschembio.6b00538"><img alt="mervin2016_doi" src="https://img.shields.io/badge/doi-10.1021%2Facschembio.6b00538-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Rogers D &amp; Hahn M. Extended-connectivity fingerprints. <em>J. Chem. Inf. Model.</em> <strong>50</strong>: 742-54 (2010) <a class="reference external" href="http://dx.doi.org/10.1021/ci100050t"><img alt="rogers_doi" src="https://img.shields.io/badge/doi-10.1021/ci100050t-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<span class="target" id="models-zip"></span></div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PIDGINv4</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview of PIDGINv4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citing-pidgin">Citing PIDGIN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Setup and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/index.html">Usage and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/index.html">Developer Notes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Prediction IncluDinG INactivity (PIDGIN) Version 4</a></li>
+      <li>Next: <a href="install.html" title="next chapter">Setup and Installation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Lewis H. Mervin, Layla Hosseini-Gerami, Maria-Anna Trapotsi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/overview.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

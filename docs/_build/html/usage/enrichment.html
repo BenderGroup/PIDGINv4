@@ -1,0 +1,278 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Enrichment Predictions &#8212; PIDGINv4 v4.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developer Notes" href="../dev/index.html" />
+    <link rel="prev" title="Extended functionality" href="extended.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="enrichment-predictions">
+<h1>Enrichment Predictions<a class="headerlink" href="#enrichment-predictions" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial assumes the PIDGINv4 repository is located at <code class="docutils literal notranslate"><span class="pre">$PV4</span></code> and is concerned with
+the script <code class="docutils literal notranslate"><span class="pre">predict_enriched.py</span></code></p>
+<p>This script calculates target prediction enrichment (using Fishers’ t-test) between two
+input SMILES/SDF files as in <a class="footnote-reference" href="#id2" id="id1">[1]</a>. Target predictions are extended with NCBI Biosystems
+pathways and DisGeNET diseases. Pathway or disease-gene association enrichment
+(using chi-square test) enrichment is calculated for the two input SMILES/SDF files.</p>
+<p>The approach is used to annotate which targets/pathways/diseases are
+statistically associated between two compound sets given their input SMILES/SDF files.
+This analysis is important since a (predicted) target is not necessarily responsible for
+eliciting an observed mechanism-of-action. Some target prediction models also behave
+promiscuously, due to biases in training data (chemical space) and the nature of the
+target.</p>
+<p>The analysis must use a cut-off for the probability of activity from the random forest
+for each target. Predictions are generated for the models using the reliability-density
+neighbourhood Applicability Domain (AD) analysis by Aniceto from:
+doi.org/10.1186/s13321-016-0182-y</p>
+<p><code class="docutils literal notranslate"><span class="pre">biosystems.txt</span></code> contains pathway data from the NCBI biosystems used to annotate target
+predictions. Pathway results can be filtered by source (e.g. KEGG/Reactome/GO) afterward.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DisGeNET_diseases.txt</span></code> contains disease data used to annotate target predictions.
+DisGeNET gene-disease score takes into account the number and type of sources (level of
+curation, organisms), and the number of publications supporting the association. The score
+ranges from 0 to 1 in accordance to increasing confidence in annotations, resepctively. A
+DisGeNET_threshold can be supplied at runtime when annotating predictions with diseases
+(0.06 threshold applied by default, which includes associations from curated
+sources/animal models supporting the association or reported in 20-200 papers). More info
+on the score here: <a class="reference external" href="http://disgenet.org/web/DisGeNET/menu/dbinfo#score">http://disgenet.org/web/DisGeNET/menu/dbinfo#score</a></p>
+<div class="section" id="list-of-available-arguments">
+<h2>List of available arguments<a class="headerlink" href="#list-of-available-arguments" title="Permalink to this headline">¶</a></h2>
+<p>To see all available options, run</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict_enriched.py -h
+<span class="go">Usage: predict_enriched.py [options]</span>
+
+<span class="go">Options:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --f1=FILE             Firest input smiles or sdf file (required)</span>
+<span class="go">  --f2=FILE             Second input smiles or sdf file (required)</span>
+<span class="go">  -d DELIM, --smiles_delim=DELIM</span>
+<span class="go">                                                Input file (smiles) delimiter char (default: white</span>
+<span class="go">                                                space &#39; &#39;)</span>
+<span class="go">  --smiles_column=SMICOL</span>
+<span class="go">                                                Input file (smiles) delimiter column (default: 0)</span>
+<span class="go">  --smiles_id_column=IDCOL</span>
+<span class="go">                                                Input file (smiles) ID column (default: 1)</span>
+<span class="go">  -o FILE               Optional output prediction file name</span>
+<span class="go">  -n NCORES, --ncores=NCORES</span>
+<span class="go">                                                No. cores (default: 1)</span>
+<span class="go">  -b BIOACTIVITY, --bioactivity=BIOACTIVITY</span>
+<span class="go">                                                Bioactivity Um threshold (required). Use either</span>
+<span class="go">                                                100/10/1/0.1 (default:10)</span>
+<span class="go">  -p PROBA, --proba=PROBA</span>
+<span class="go">                                                RF probability threshold (default: None)</span>
+<span class="go">  --ad=AD               Applicability Domain (AD) filter using percentile of</span>
+<span class="go">                                                weights [float]. Default: 90 (integer for percentile)</span>
+<span class="go">  --known_flag          Set known activities (annotate duplicates betweem</span>
+<span class="go">                                                input to train with correct label)</span>
+<span class="go">  --orthologues         Set to use orthologue bioactivity data in model</span>
+<span class="go">                                                generation</span>
+<span class="go">  --organism=ORGANISM   Organism filter (multiple can be specified using</span>
+<span class="go">                                                commas &#39;,&#39;)</span>
+<span class="go">  --target_class=TARGETCLASS</span>
+<span class="go">                                                Target classification filter</span>
+<span class="go">  --min_size=MINSIZE    Minimum number of actives used in model generation</span>
+<span class="go">                                                (default: 10)</span>
+<span class="go">  --performance_filter=P_FILT</span>
+<span class="go">                                                Comma-seperated performance filtering using following</span>
+<span class="go">                                                nomenclature: validation_set[tsscv,l50so,l50po],metric</span>
+<span class="go">                                                [bedroc,roc,prauc,brier],performance_threshold[float].</span>
+<span class="go">                                                E.g &#39;tsscv,bedroc,0.5&#39;</span>
+<span class="go">  --se_filter           Optional setting to restrict to models which do not</span>
+<span class="go">                                                require Sphere Exclusion (SE)</span>
+<span class="go">  --training_log        Optional setting to add training_details to the</span>
+<span class="go">                                                prediction file (large increase in output file size)</span>
+<span class="go">  --ntrees=NTREES       Specify the minimum number of trees for warm-start</span>
+<span class="go">                                                random forest models (N.B Potential large</span>
+<span class="go">                                                latency/memory cost)</span>
+<span class="go">  --preprocess_off      Turn off preprocessing using the flatkinson (eTox)</span>
+<span class="go">                                                standardizer (github.com/flatkinson/standardiser),</span>
+<span class="go">                                                size filter (100 &gt;= Mw &gt;= 1000 and organic mol check</span>
+<span class="go">                                                (C count &gt;= 1)</span>
+<span class="go">  --dgn=DGN_THRESHOLD   DisGeNET score threshold (default: 0.06)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generating-enrichment-predictions">
+<h2>Generating enrichment predictions<a class="headerlink" href="#generating-enrichment-predictions" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we will work with a two SMILES input files, comprising cytotoxic
+compounds in the file named <code class="docutils literal notranslate"><span class="pre">cytotox_library.smi</span></code> and (putative) non-toxic compounds in
+the file named <code class="docutils literal notranslate"><span class="pre">nontoxic_background.smi</span></code>. Both are located in the examples directory.</p>
+<p>The corresponding top 5 SMILES strings are:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">cytotox_library.smi</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C1Cc2cc3OCOc3c4c5ccccc5C</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">N1</span><span class="p">)</span><span class="n">c24</span>
+<span class="p">[</span><span class="n">Cl</span><span class="o">-</span><span class="p">]</span><span class="o">.</span><span class="n">COc1ccc2cc3c4cc5OCOc5cc4CC</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="p">]</span><span class="mi">3</span><span class="n">cc2c1OC</span>
+<span class="n">COc1cc2c3CN4CCC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)</span><span class="n">c3c5ccc</span><span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="n">cc5c2cc1OC</span>
+<span class="n">COc1cc2c3CN4CCC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)</span><span class="n">c3c5ccc</span><span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="n">c</span><span class="p">(</span><span class="n">OC</span><span class="p">)</span><span class="n">c5c2cc1OC</span>
+<span class="n">C</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">](</span><span class="n">CCC</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">C</span><span class="p">)[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">1</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">](</span><span class="n">C</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">2</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">]</span><span class="mi">3</span><span class="n">CC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="n">C</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">](</span><span class="n">CC</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="p">]</span><span class="mi">4</span><span class="p">(</span><span class="n">C</span><span class="p">)[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">3</span><span class="n">CC</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)[</span><span class="n">C</span><span class="o">@</span><span class="p">]</span><span class="mi">12</span><span class="n">C</span><span class="p">)</span><span class="n">OC</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)</span><span class="n">C</span><span class="p">)</span><span class="n">OC</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)</span><span class="n">C</span><span class="p">)</span><span class="n">CO</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">]</span><span class="mi">5</span><span class="n">O</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">](</span><span class="n">CO</span><span class="p">)[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)[</span><span class="n">C</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">5</span><span class="n">O</span>
+</pre></div>
+</div>
+</div>
+<p>and</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">nontoxic_background.smi</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CC12CC3CC</span><span class="p">(</span><span class="n">C</span><span class="p">)(</span><span class="n">C1</span><span class="p">)</span><span class="n">CC</span><span class="p">(</span><span class="n">C3</span><span class="p">)(</span><span class="n">C2</span><span class="p">)</span><span class="n">NCc1ccccc1OCc1ccccc1F</span>
+<span class="n">CCCn1ccnc1C</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)</span><span class="n">c1cc2ccccc2s1</span>
+<span class="n">Cc1nn</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">c</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">c1S</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)(</span><span class="o">=</span><span class="n">O</span><span class="p">)</span><span class="n">NC1CCCCC1N</span>
+<span class="n">CC</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">CN</span><span class="p">(</span><span class="n">CC</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">C</span><span class="p">)</span><span class="n">C</span><span class="p">(</span><span class="o">=</span><span class="n">O</span><span class="p">)</span><span class="n">c1ccc</span><span class="p">(</span><span class="n">nc1C</span><span class="p">)</span><span class="n">C</span><span class="p">(</span><span class="n">F</span><span class="p">)(</span><span class="n">F</span><span class="p">)</span><span class="n">F</span>
+<span class="n">CC1CCc2c</span><span class="p">(</span><span class="n">C1</span><span class="p">)</span><span class="n">sc1nc</span><span class="p">(</span><span class="n">CN3CCOCC3</span><span class="p">)</span><span class="n">nc</span><span class="p">(</span><span class="n">Oc3ccccc3F</span><span class="p">)</span><span class="n">c21</span>
+</pre></div>
+</div>
+</div>
+<p>The following code will generate cow target prediction enrichment at 1μM (with lenient AD
+filters of 30 percentiles and probability of activity cut-off of 0.45) along with enriched
+pathways and diseases (0.06 score threshold) for the cytotoxic compounds, when compared to
+the non-toxic compounds.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict_enriched.py --f1 cytotox_library.smi --f2 nontoxic_background.smi --organism <span class="s2">&quot;Bos taurus&quot;</span> -b <span class="m">1</span> -p <span class="m">0</span>.45 --ad <span class="m">30</span> -n <span class="m">4</span>
+</pre></div>
+</div>
+<p>Three files are output for the target, pathway and disease enrichment calculations, with
+the naming convention:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[f1]_vs[f2]_out_[disease/pathway]_predictions_enriched[timestamp].txt</span></code></p>
+<p>The rows in each file correspond to the ranked enriched list of targets/pathways/diseases
+that are more statistically associated with the first SMILES/SDF file (<code class="docutils literal notranslate"><span class="pre">--f1</span></code>) of
+(e.g. cytotoxic) compounds. A higher Odd’s Ratio (column <code class="docutils literal notranslate"><span class="pre">Odds_Ratio</span></code>) or Risk Ratio
+(<code class="docutils literal notranslate"><span class="pre">Risk_Ratio</span></code>) indicates a larger degree of enrichment for a given
+target/pathway/disease compared to the second input <code class="docutils literal notranslate"><span class="pre">--f2</span></code> (nontoxic) compound set.</p>
+<p>The output has columns for the number of compound predictions (column
+<code class="docutils literal notranslate"><span class="pre">[f1/f2]_[In]Actives_[probability_activity]</span></code>) and the associated percentage
+<code class="docutils literal notranslate"><span class="pre">Percent_[f1/f2]_[In]Actives_[probability_activity]</span></code>) of compounds with that prediction.</p>
+<p>The Fishers or Chi-squared p-values are provided (<code class="docutils literal notranslate"><span class="pre">[Fishers_Test/Chisquared]_P_Value</span></code>)
+including the Benjamini &amp; Hochberg corrected values in the column named
+<code class="docutils literal notranslate"><span class="pre">[Fishers_Test/Chisquared]_P_Value_Corrected</span></code>. The output should be filtered for a
+given preference.</p>
+<p>The percentage NaN predictions (compounds outside the Applicability Domain (AD) filter
+that were not given an active/inactive target prediction) are also provided in the column
+entitled <code class="docutils literal notranslate"><span class="pre">[f1/f2]_Proportion_Nan_Predictions_[ad]</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please note that the Odd’s and Risk ratios are implemented in a different way to the
+previous version of PIDGIN. For this version, larger numbers indicate larger
+enrichments.</p>
+</div>
+<p>In this example, there are six targets with a corrected p-value less than 0.05 with a Odds
+or Risk ratio greater than 1.0. All targets have known links to cytotoxicity, for example
+three are related to Tublin with known mechanisms to cytotoxicity (via cytoskeletal
+machinery).</p>
+</div>
+<div class="section" id="more-complicated-example">
+<h2>More complicated example<a class="headerlink" href="#more-complicated-example" title="Permalink to this headline">¶</a></h2>
+<p>Target/pathway/disease enrichment analysis can be combined with all model filters outlined
+in the previous section “Getting started”.</p>
+<p>For example, the following code:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict_enriched.py --f1 cytotox_library.smi --f2 nontoxic_background.smi --organism Drosophila -b <span class="m">100</span> --known_flag --ad <span class="m">0</span> -n <span class="m">4</span> -p <span class="m">0</span>.8 --min_size <span class="m">50</span> --se_filter --performance_filter l50po,bedroc,0.8
+</pre></div>
+</div>
+<p>would filter for Drosophila models that did not require Sphere Exlusion (SE) (i.e. sufficient number of inactives available) and a minimum number of 50 actives in the training set, with a minimum BEDROC performance of 0.8 for leave out 50% of ChEMBL publications from training data over 4-fold cross validation (L50PO), to produce enrichment predictions at a 0.8 probability cut-off at a threshold of 100μM, with the Applicability Domain (AD) filter silenced and where known activities (in ChEMBL or PubChem) are set.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Mervin, L H., et al. Understanding Cytotoxicity and Cytostaticity in a High-Throughput Screening Collection. <em>ACS Chem. Biol.</em> <strong>11</strong>: 11 (2016) <a class="reference external" href="https://doi.org/10.1021/acschembio.6b00538"><img alt="mervin2016_doi" src="https://img.shields.io/badge/doi-10.1021%2Facschembio.6b00538-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<span class="target" id="models-zip"></span></div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PIDGINv4</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview of PIDGINv4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Setup and Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Usage and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="command.html">Command Line Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extended.html">Extended functionality</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Enrichment Predictions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/index.html">Developer Notes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Usage and Examples</a><ul>
+      <li>Previous: <a href="extended.html" title="previous chapter">Extended functionality</a></li>
+      <li>Next: <a href="../dev/index.html" title="next chapter">Developer Notes</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Lewis H. Mervin, Layla Hosseini-Gerami, Maria-Anna Trapotsi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/usage/enrichment.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

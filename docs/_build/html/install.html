@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Setup and Installation &#8212; PIDGINv4 v4.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage and Examples" href="usage/index.html" />
+    <link rel="prev" title="Overview of PIDGINv4" href="overview.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="setup-and-installation">
+<h1>Setup and Installation<a class="headerlink" href="#setup-and-installation" title="Permalink to this headline">¶</a></h1>
+<p>Development and documentation occurs on <a class="reference external" href="https://github.com/BenderGroup/PIDGINv4">GitHub</a>.</p>
+<p>PIDGIN is currently only compatible with Python 2.7.x.
+It also has the following dependencies:</p>
+<div class="section" id="required-dependencies">
+<h2>Required dependencies<a class="headerlink" href="#required-dependencies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://http://www.numpy.org/">NumPy</a></li>
+<li><a class="reference external" href="https://www.scipy.org/">SciPy</a></li>
+<li><a class="reference external" href="http://www.rdkit.org">RDKit</a></li>
+<li><a class="reference external" href="http://scikit-learn.org/">Scikit-learn</a></li>
+<li><a class="reference external" href="https://github.com/flatkinson/standardiser">Standardiser</a></li>
+<li><a class="reference external" href="https://github.com/sdaxen/python_utilities">python_utilities</a></li>
+</ul>
+</div>
+<div class="section" id="install-with-conda">
+<h2>Install with Conda<a class="headerlink" href="#install-with-conda" title="Permalink to this headline">¶</a></h2>
+<p>Follow these steps on Linux/OSX:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">Download</span> <span class="pre">and</span> <span class="pre">install</span> <span class="pre">Anaconda2</span> <span class="pre">for</span> <span class="pre">Python</span> <span class="pre">2.7</span> <span class="pre">from</span> <span class="pre">https://www.continuum.io/downloads</span></code></li>
+<li>Open terminal in Mac/Linux and run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">pidgin4_env.yml</span> <span class="pre">--name</span> <span class="pre">pidgin4_env</span></code></li>
+</ol>
+<ul class="simple">
+<li>N.B. Rdkit may not import on some systems due to a bug. If this happens upgrade to the latest version of conda before creating the above environment using: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">conda</span></code></li>
+<li>N.B. Installs the IMI eTOX <a class="reference external" href="https://github.com/flatkinson/standardiser">flatkinson standardiser</a> (replaces ChemAxon’s standardizer used in previous PIDGIN versions) and statsmodels for p-value correction in predict_enriched.py</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li>Now run: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">activate</span> <span class="pre">pidgin4_env</span></code> (This activates the PIDGINv4 virtual environment. N.B This is required for each new terminal session in order to run PIDGIN in the future)</li>
+<li>Navigate the directory you wish to install PIDGINv4 and in Mac/Linux terminal run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/BenderGroup/PIDGINv4.git</span></code> (recommended) or download/extract the zip from <a class="reference external" href="https://github.com/BenderGroup/PIDGINv4">GitHub</a> webpage (not recommended due to inability to pull updates)</li>
+<li>(14GB) Download and unzip <a class="reference external" href="https://tinyurl.com/pidgin4-no-ortho">no_ortho.zip</a> (md5sum: c9b226f864d5199ecd96d058081fe2eb) into the PIDGINv4 main directory (leave all subsequent files compressed)</li>
+<li>(optional 37GB) Models are also available when mapping data between orthologues, as in <a class="footnote-reference" href="#id2" id="id1">[1]</a>. N.B The files are 24GB and many models are based solely on orthologue data. To include this functionality, download <a class="reference external" href="https://tinyurl.com/pidgin4-ortho">ortho.zip</a> (md5sum: 26492fd0216a2187e33d47bc789ef304) to the PIDGINv4 main directory and unzip <a class="reference external" href="https://tinyurl.com/pidgin4-ortho">ortho.zip</a> (leave all subsequent files compressed)</li>
+</ol>
+<ul class="simple">
+<li>N.B Depending on bandwidth, Step 5/6 may take some time</li>
+</ul>
+</div>
+<div class="section" id="filetree-structure">
+<h2>Filetree structure<a class="headerlink" href="#filetree-structure" title="Permalink to this headline">¶</a></h2>
+<p>Once the models are downloaded and the main zip uncompressed, you should find the
+following filetree structure within the PIDGINv4 directory (located for this snippet at
+<code class="docutils literal notranslate"><span class="pre">$PV4</span></code>) if both the optional orthologs (ortho) and models without orthologs (no_ortho)
+files are used:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>PV4 tree -L <span class="m">2</span>
+<span class="go">.</span>
+<span class="go">├── biosystems.txt</span>
+<span class="go">├── DisGeNET_diseases.txt</span>
+<span class="go">├── docs</span>
+<span class="go">│   ├── conf.py</span>
+<span class="go">│   ├── dev</span>
+<span class="go">│   ├── index.rst</span>
+<span class="go">│   ├── install.rst</span>
+<span class="go">│   ├── make.bat</span>
+<span class="go">│   ├── Makefile</span>
+<span class="go">│   ├── overview.rst</span>
+<span class="go">│   ├── substitutions.rst</span>
+<span class="go">│   └── usage</span>
+<span class="go">├── examples</span>
+<span class="go">│   ├── test2.smi</span>
+<span class="go">│   └── test.smi</span>
+<span class="go">├── LICENSE</span>
+<span class="go">├── nontoxic_background.csv</span>
+<span class="go">├── no_ortho</span>
+<span class="go">│   ├── ad_analysis</span>
+<span class="go">│   ├── bioactivity_dataset</span>
+<span class="go">│   ├── pkls</span>
+<span class="go">│   ├── training_log.txt</span>
+<span class="go">│   ├── training_results</span>
+<span class="go">│   └── uniprot_information.txt</span>
+<span class="go">├── no_ortho.zip</span>
+<span class="go">├── ortho</span>
+<span class="go">│   ├── ad_analysis</span>
+<span class="go">│   ├── bioactivity_dataset</span>
+<span class="go">│   ├── check_ad2.py</span>
+<span class="go">│   ├── check_ad.py</span>
+<span class="go">│   ├── pkls</span>
+<span class="go">│   ├── training_log.txt</span>
+<span class="go">│   ├── training_results</span>
+<span class="go">│   └── uniprot_information.txt</span>
+<span class="go">├── ortho.zip</span>
+<span class="go">├── pidgin4_env.yml</span>
+<span class="go">├── sim_to_train.py</span>
+<span class="go">├── predict_enriched.py</span>
+<span class="go">├── predict.py</span>
+<span class="go">└── README.rst</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Mervin, L H., et al. Orthologue chemical space and its influence on target prediction. <em>Bioinformatics.</em> <strong>34</strong>: 72–79 (2018) <a class="reference external" href="https://doi.org/10.1093/bioinformatics/btx525"><img alt="mervin2018_doi" src="https://img.shields.io/badge/doi-10.1093%2Fbioinformatics%2Fbtx525-blue.svg" /></a></td></tr>
+</tbody>
+</table>
+<span class="target" id="models-zip"></span></div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PIDGINv4</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of PIDGINv4</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup and Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-with-conda">Install with Conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filetree-structure">Filetree structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/index.html">Usage and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/index.html">Developer Notes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="overview.html" title="previous chapter">Overview of PIDGINv4</a></li>
+      <li>Next: <a href="usage/index.html" title="next chapter">Usage and Examples</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Lewis H. Mervin, Layla Hosseini-Gerami, Maria-Anna Trapotsi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/install.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

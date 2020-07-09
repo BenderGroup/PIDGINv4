@@ -1,0 +1,205 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Getting started &#8212; PIDGINv4 v4.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Extended functionality" href="extended.html" />
+    <link rel="prev" title="Command Line Arguments" href="command.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial assumes the PIDGINv4 repository is located at <code class="docutils literal notranslate"><span class="pre">$PV4</span></code>.</p>
+<div class="section" id="generating-predictions-for-human-targets">
+<h2>Generating predictions for human targets<a class="headerlink" href="#generating-predictions-for-human-targets" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we will work with the input file named <code class="docutils literal notranslate"><span class="pre">test.smi</span></code> in the examples
+directory, which containins two molecules whose SMILES strings are defined as:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">test.smi</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">COc1cc2c3CN4CCC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)</span><span class="n">c3c5ccc</span><span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="n">cc5c2cc1OC</span> <span class="n">CompoundID1</span>
+<span class="n">COc1cc2c3CN4CCC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)</span><span class="n">c3c5ccc</span><span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="n">c</span><span class="p">(</span><span class="n">OC</span><span class="p">)</span><span class="n">c5c2cc1OC</span> <span class="n">CompoundID2</span>
+</pre></div>
+</div>
+</div>
+<p>The following code will generate the RF probabilities at 1μM for all human targets for
+the input file:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> -b <span class="m">1</span>
+</pre></div>
+</div>
+<p>This script outputs the RF output from each of the Random Forest classifiers across the
+targets for the all compounds into a probability matrix, where the columns are compounds
+and the rows are targets.</p>
+<p>If using <code class="docutils literal notranslate"><span class="pre">--organism</span></code>, it must be as specified in the uniprot_information.txt and
+if using spaces enclosed by quotes (“”) - as in the above example. The organism filter
+uses fuzzy matching, so <code class="docutils literal notranslate"><span class="pre">--organism</span> <span class="pre">homo</span></code> would also achieve a similar filtered list.</p>
+</div>
+<div class="section" id="generating-binary-predictions">
+<h2>Generating binary predictions<a class="headerlink" href="#generating-binary-predictions" title="Permalink to this headline">¶</a></h2>
+<p>The following code will generate binary predictions at 0.1 and 1μM for all human targets,
+at a threshold of 0.5 (the compound was more often predicted active compared to inactive):</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> -b <span class="m">0</span>.1,1 -p <span class="m">0</span>.5
+</pre></div>
+</div>
+<p>The threshold can be increased to increase the confidence in the prediction.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These probabilities are different from PIDGIN <a class="reference external" href="https://github.com/lhm30/PIDGINv2">version 2</a> in that they have not been
+Platt-scaled, since this increased the number of false positives.</p>
+</div>
+</div>
+<div class="section" id="decreasing-applicability-domain-ad-filter">
+<h2>Decreasing applicability domain (AD) filter<a class="headerlink" href="#decreasing-applicability-domain-ad-filter" title="Permalink to this headline">¶</a></h2>
+<p>To reduce the stringency in the AD filter, the <code class="docutils literal notranslate"><span class="pre">--ad</span></code> parameter (defulat:90) can be
+reduced, as in the following snippet:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> -b <span class="m">1</span> -p <span class="m">0</span>.5 --ad <span class="m">60</span>
+</pre></div>
+</div>
+<p>In this case, the threshold for the applicability domain weights calculated across the
+targets has been reduced from 90% to 60%, and thus compounds that are further from the
+AD are now accepted.</p>
+</div>
+<div class="section" id="outputting-the-ad-results">
+<h2>Outputting the AD results<a class="headerlink" href="#outputting-the-ad-results" title="Permalink to this headline">¶</a></h2>
+<p>To following snippet calculates the weights for each of the input compounds and outputs
+their corresponding percentile value, so that a user can view the matrix of percentiles
+for each compound and accept/reject predictions at a percentile threshold without the need
+to re-run predictions:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> -b <span class="m">1</span> --percentile
+</pre></div>
+</div>
+</div>
+<div class="section" id="silencing-the-ad-filter">
+<h2>Silencing the AD filter<a class="headerlink" href="#silencing-the-ad-filter" title="Permalink to this headline">¶</a></h2>
+<p>To following snippet would therefore turn off the AD filter, since all predictions are
+accepted:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> -b <span class="m">1</span> --ad <span class="m">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="combining-model-filters">
+<h2>Combining model filters<a class="headerlink" href="#combining-model-filters" title="Permalink to this headline">¶</a></h2>
+<p>If the user is interested in a given target class (for example “Lipase”) then the
+following can be used:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> --target_class Lipase
+</pre></div>
+</div>
+<p>Filters can be combined, for instance:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> --target_class GPCR --min_size <span class="m">25</span> --performance_filter tsscv,prauc,0.7
+</pre></div>
+</div>
+<p>would filter human models for GPCRs with a minimum number of 25 actives in the training
+set and with a minimum precision-recall AUC (PR-AUC) performance of 0.7 during time-series
+split cross validation (TSSCV).</p>
+<p>Additional criteria can be added, for instance:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Rattus&quot;</span> -b <span class="m">0</span>.1,1 -p <span class="m">0</span>.5 --min_size <span class="m">50</span> --se_filter --performance_filter l50po,bedroc,0.8
+</pre></div>
+</div>
+<p>would filter rat models that did not require Sphere Exclusion (SE) (i.e. sufficient number
+of inactives available) and a minimum number of 50 actives in the training set, with a
+minimum BEDROC performance of 0.8 during leave 50% of ChEMBL publications in the training
+data out over 4-fold cross validation (L50PO) to produce a binary matrix of predictions
+at a probability cut-off of 0.5 and for models trained with bioactivity data at a
+threshold of 0.1 &amp; 1.01μM.</p>
+<span class="target" id="models-zip"></span></div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PIDGINv4</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview of PIDGINv4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Setup and Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Usage and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="command.html">Command Line Arguments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extended.html">Extended functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enrichment.html">Enrichment Predictions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/index.html">Developer Notes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Usage and Examples</a><ul>
+      <li>Previous: <a href="command.html" title="previous chapter">Command Line Arguments</a></li>
+      <li>Next: <a href="extended.html" title="next chapter">Extended functionality</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Lewis H. Mervin, Layla Hosseini-Gerami, Maria-Anna Trapotsi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/usage/started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

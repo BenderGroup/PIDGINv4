@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Extended functionality &#8212; PIDGINv4 v4.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Enrichment Predictions" href="enrichment.html" />
+    <link rel="prev" title="Getting started" href="started.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="extended-functionality">
+<h1>Extended functionality<a class="headerlink" href="#extended-functionality" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial assumes the PIDGINv4 repository is located at <code class="docutils literal notranslate"><span class="pre">$PV4</span></code>.</p>
+<p>The input file named <code class="docutils literal notranslate"><span class="pre">test.smi</span></code> is used for these examples</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">test.smi</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">COc1cc2c3CN4CCC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)</span><span class="n">c3c5ccc</span><span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="n">cc5c2cc1OC</span> <span class="n">CompoundID1</span>
+<span class="n">COc1cc2c3CN4CCC</span><span class="p">[</span><span class="n">C</span><span class="nd">@H</span><span class="p">]</span><span class="mi">4</span><span class="p">[</span><span class="n">C</span><span class="o">@</span><span class="nd">@H</span><span class="p">](</span><span class="n">O</span><span class="p">)</span><span class="n">c3c5ccc</span><span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="n">c</span><span class="p">(</span><span class="n">OC</span><span class="p">)</span><span class="n">c5c2cc1OC</span> <span class="n">CompoundID2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generating-transposed-predictions">
+<h2>Generating transposed predictions<a class="headerlink" href="#generating-transposed-predictions" title="Permalink to this headline">¶</a></h2>
+<p>The following code will output the RF probabilities at 10μM for all human targets to a
+transposed file:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism <span class="s2">&quot;Homo sapiens&quot;</span> -b <span class="m">10</span> --transpose
+</pre></div>
+</div>
+<p>This script outputs the RF output from each of the Random Forest classifiers across the
+targets for the all compounds into a probability matrix, where the rows are compounds
+and the columns are targets.</p>
+</div>
+<div class="section" id="increasing-trees-and-getting-the-standard-dev-for-input-compounds">
+<h2>Increasing trees and getting the standard dev. for input compounds<a class="headerlink" href="#increasing-trees-and-getting-the-standard-dev-for-input-compounds" title="Permalink to this headline">¶</a></h2>
+<p>The following snippet will increase the minimum number of RF trees to 250 for all 0.1μM
+ligase targets and then calculate the standard deviation of the predictions across the 250
+trees in the forests across the filtered targets:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --ntrees <span class="m">250</span> --target_class Ligase --std_dev
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The max number of trees when generating the models was set to 250. An algorithm to
+search for the optimal trees was performed as follows: 1. start at 90 trees and
+calculate the out-of-bag error (OOB) for the forest. 2. Increase the trees by 10 and
+calculate difference in OOB score. 3. Repeat until 1 minute of train time is reached
+or there was no performance gain on two trees incement occasions (test for convergence)
+or a maximum of 250 trees is reached.</p>
+</div>
+</div>
+<div class="section" id="annotating-predictions-with-known-activity">
+<h2>Annotating predictions with known activity<a class="headerlink" href="#annotating-predictions-with-known-activity" title="Permalink to this headline">¶</a></h2>
+<p>The probabilities output are clipped between <code class="docutils literal notranslate"><span class="pre">0.001</span></code> and <code class="docutils literal notranslate"><span class="pre">0.999</span></code>, so that a perfect
+score of 0.0 and 1.0 is not obtained from the RFs. This behaviour affords the explicit
+annotation of duplicate bioactivity data between input compounds and the training set by
+specifying known inactives with a score of <code class="docutils literal notranslate"><span class="pre">0.0</span></code> and actives with <code class="docutils literal notranslate"><span class="pre">1.0</span></code>. To activate
+this functionality use the following snippet:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/predict.py -f test.smi --organism Drosophila -b <span class="m">100</span> --known_flag
+</pre></div>
+</div>
+<p>which would provide predictions for all Drosophila targets with a 100μM cut-off, and would
+calculate overlap between input compounds and the training set and annotate these instead
+of providing predictions.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This setting increases latency since every input compound has to be compared for
+perfect Tanimoto coefficient (Tc) similarity of <code class="docutils literal notranslate"><span class="pre">1.0</span></code> against every training
+compound.</p>
+</div>
+</div>
+<div class="section" id="similarity-of-input-compounds-to-the-active-compounds-in-the-training-set">
+<h2>Similarity of input compounds to the active compounds in the training set<a class="headerlink" href="#similarity-of-input-compounds-to-the-active-compounds-in-the-training-set" title="Permalink to this headline">¶</a></h2>
+<p>The sim_to_train.py script conducts Tanimoto coefficient (Tc) similarity analysis for input compounds in test.smi and the active compounds in the training data in PIDGIN. This can be used to support prediction interpretation to indicate which compounds are driving predictions. Two files are produced; The first is a matrix similar to the predict_raw script above, which has a similarity matrix of compounds vs. target instead of the raw predictions. The second is a detailed breakdown of the nearest neighbour compounds in the training set (i.e. their affinity, confidence and which organism this is extracted from - since ortholog bioactivity data is also used).
+Example of how to run the code:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python <span class="nv">$PV4</span>/sim_to_train.py -f test.smi --organism <span class="s1">&#39;Mus musculus&#39;</span> -n <span class="m">4</span> -b <span class="m">100</span> --ortho
+</pre></div>
+</div>
+<p>which would provide Tc similarity results for the compounds in test.smi file for ‘Mus musculus’ organism with a 100μM cut-off including orthologue data and using 4 cores for the calculation.
+.. note:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Options</span> <span class="n">available</span> <span class="k">for</span> <span class="n">this</span> <span class="n">calculation</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">selection</span> <span class="n">of</span> <span class="n">orthologue</span> <span class="n">data</span>
+<span class="o">-</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">organism</span>
+<span class="o">-</span> <span class="n">bioactivity</span> <span class="n">threshold</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="ow">or</span> <span class="mi">100</span> <span class="n">μM</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">number</span> <span class="n">of</span> <span class="n">cores</span>
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">specifying</span> <span class="n">the</span> <span class="n">command</span> <span class="n">Line</span> <span class="n">Arguments</span> <span class="n">see</span> <span class="s1">&#39;Command Line Arguments&#39;</span> <span class="n">section</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PIDGINv4</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview of PIDGINv4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Setup and Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Usage and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="command.html">Command Line Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="started.html">Getting started</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Extended functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enrichment.html">Enrichment Predictions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/index.html">Developer Notes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Usage and Examples</a><ul>
+      <li>Previous: <a href="started.html" title="previous chapter">Getting started</a></li>
+      <li>Next: <a href="enrichment.html" title="next chapter">Enrichment Predictions</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Lewis H. Mervin, Layla Hosseini-Gerami, Maria-Anna Trapotsi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/usage/extended.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
