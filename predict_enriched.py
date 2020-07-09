@@ -1,8 +1,8 @@
-#Authors : Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin
-#Email: mat64@cam.ac.uk and lh605@cam.ac.uk
+#Author : Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin 
+#Emails : mat64@cam.ac.uk and lh605@cam.ac.uk
 #Supervisor : Dr. A. Bender
 #All rights reserved 2020
-#Protein Target Prediction using on SAR data from PubChem and ChEMBL_24
+#Protein Target Prediction using on SAR data from PubChem and ChEMBL_26
 #Molecular Descriptors : 2048bit circular Binary Fingerprints (Rdkit) - ECFP_4
 #Dependencies : rdkit, sklearn, standardiser
 
@@ -67,11 +67,11 @@ parser.add_option("--dgn", default=0.06, type=float, dest="dgn_threshold", help=
 if options.delim == 'tab': options.delimcol1 = '\t'
 
 def introMessage():
-        print '=============================================================================================='
-        print ' Authors: Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin\n Email:  mat64@cam.ac.uk, lh605@cam.ac.uk\n Supervisor: Dr. A. Bender'
-        print ' Address: Centre For Molecular Informatics, Dept. Chemistry, Lensfield Road, Cambridge CB2 1EW'
-        print '==============================================================================================\n'
-        return
+	print '=============================================================================================='
+	print ' Authors: Layla Hosseini-Gerami, Maria-Anna Trapotsi and Lewis Mervin\n Email:  lh605@cam.ac.uk, mat64@cam.ac.uk \n Supervisor: Dr. A. Bender'
+	print ' Address: Centre For Molecular Informatics, Dept. Chemistry, Lensfield Road, Cambridge CB2 1EW'
+	print '==============================================================================================\n'
+	return
 
 #check smiles of sdf (if not warn)	
 def check_Input(inp):
@@ -397,7 +397,8 @@ def doTargetPrediction(model_name):
 
 #prediction runner for prediction or standard deviation calculation
 def performTargetPrediction(models):
-	global disease_links, disease_hits, pathway_links, pathway_hits
+    for model in models:
+        global disease_links, disease_hits, pathway_links, pathway_hits
 	prediction_results = []
 	pool = Pool(processes=options.ncores, initializer=initPool, initargs=(querymatrix,rdkit_mols,options.proba,ad_settings,n_inf2))
 	jobs = pool.imap_unordered(doTargetPrediction, models)
@@ -407,11 +408,14 @@ def performTargetPrediction(models):
 		sys.stdout.flush()
 		if result is not None:
 			prediction_results.append(result)
-			#update hits for each of the uniprots linked to mid
-			for uniprot_row in mid_uniprots[result[1]]:
+#update hits for each of the uniprots linked to mid
+                        try:
+                            for uniprot_row in mid_uniprots[result[1]]:
 				updateHits(disease_links,disease_hits,uniprot_row[0],result[4],result[8])
 				updateHits(pathway_links,pathway_hits,uniprot_row[0],result[4],result[8])
-	pool.close()
+	                except:
+                            print("skipping uniprot")
+        pool.close()
 	pool.join()
 	if len(prediction_results) == 0:
 		print '\n Warning: No active target predictions...quitting'
@@ -491,10 +495,13 @@ def writeOutTPResults(results):
 	global mid_uniprots, model_info, options, timestr
 	out_data = []
 	for res in results:
+            try:
 		mid = res[1]
 		for uniprot_rows in mid_uniprots[mid]:
 			if options.train_log: out_data += [uniprot_rows + model_info[mid][1:] + list(res[2:])+[res[0]]]
 			else: out_data += [uniprot_rows + list(res[2:])+[res[0]]]
+            except:
+                print("skipping uniprot")
 	out_data = np.array(out_data)
 	if not options.off:
 		if options.inf2:

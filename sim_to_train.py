@@ -2,7 +2,7 @@
 #Emails : mat64@cam.ac.uk and lh605@cam.ac.uk
 #Supervisor : Dr. A. Bender
 #All rights reserved 2020
-#Protein Target Prediction Tool trained on SARs from PubChem (Mined 21/06/16) and ChEMBL21
+#Protein Target Prediction Tool trained on SARs from PubChem (Mined March 2020) and ChEMBL26
 #Molecular Descriptors : 2048bit Morgan Binary Fingerprints (Rdkit) - ECFP4
 #Dependencies : rdkit, sklearn, numpy
 

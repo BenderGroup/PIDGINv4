@@ -2,7 +2,7 @@
 #Contact: mat64@cam.ac.uk and lh605@cam.ac.uk
 #Supervisor : Dr. A. Bender
 #All rights reserved 2020
-#Protein Target Prediction using on SAR data from PubChem and ChEMBL_24
+#Protein Target Prediction using on SAR data from PubChem and ChEMBL_26
 #Molecular Descriptors : 2048bit circular Binary Fingerprints (Rdkit) - ECFP_4
 #Dependencies : rdkit, sklearn, standardiser
 
