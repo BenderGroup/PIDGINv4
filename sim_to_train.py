@@ -49,12 +49,22 @@ def check_Input():
         return extension
 
 #Read Dictionary to filter  any models with 0 actives
+if os.name == 'nt':
+    sep = '\\'
+else: 
+    sep = '/'
+
+no_ortho_dict = os.path.dirname(os.path.abspath(__file__)) + sep + 'dict_uniprot_2_actives.json'
+ortho_dict = os.path.dirname(os.path.abspath(__file__)) + sep + 'dict_uniprot_2_actives_ortho.json'
+
 if options.ortho == False:
-    with open('dict_uniprot_2_actives.json', 'r') as fp:
+    with open(no_ortho_dict, 'r') as fp:
         dict_uniprot_2_actives = json.load(fp)
 if options.ortho == True:
-    with open('dict_uniprot_2_actives_ortho.json', 'r') as fp:
+    with open(ortho_dict, 'r') as fp:
 	dict_uniprot_2_actives = json.load(fp)
+
+#print(dict_uniprot_2_actives)
 
 #calculate 2048bit morgan fingerprints, radius 2
 def calcFingerprints(smiles):
@@ -241,7 +251,6 @@ if __name__ == '__main__':
                     if n_actives>=1:
 			models_filtered.append(model_id)
 		models=models_filtered
-		print(n_actives)
                 output_name = input_name + '_out_similarity_details' + '_'+options.organism.replace(' ', '_') + '.txt'
                 output_name2 = input_name + '_out_similarity_matrix' + '_'+options.organism.replace(' ', '_') + '.txt'
                 print ' Predicting for organism : ' + desired_organism
