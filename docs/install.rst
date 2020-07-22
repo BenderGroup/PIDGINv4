@@ -36,7 +36,7 @@ Follow these steps on Linux/OSX:
 
 5. (14GB) Download and unzip `no_ortho.zip`_ (md5sum: c9b226f864d5199ecd96d058081fe2eb) into the PIDGINv4 main directory (leave all subsequent files compressed)
 
-6. (optional 37GB) Models are also available when mapping data between orthologues, as in [1]_. N.B The files are 24GB and many models are based solely on orthologue data. To include this functionality, download `ortho.zip`_ (md5sum: 26492fd0216a2187e33d47bc789ef304) to the PIDGINv4 main directory and unzip `ortho.zip`_ (leave all subsequent files compressed)
+6. (optional 37GB) Models are also available when mapping data between orthologues, as in [1]_. N.B The files are 37GB and many models are based solely on orthologue data. To include this functionality, download `ortho.zip`_ (md5sum: 26492fd0216a2187e33d47bc789ef304) to the PIDGINv4 main directory and unzip `ortho.zip`_ (leave all subsequent files compressed)
 
 * N.B Depending on bandwidth, Step 5/6 may take some time
 
