@@ -111,7 +111,7 @@ def check_set_working_env():
 def get_Models():
 	global mod_dir, sep, options
 	target_count = 0
-	model_info = [l.split('\t') for l in open(mod_dir + 'training_log.txt').read().splitlines()]
+	model_info = [l.split('\t')[1:] for l in open(mod_dir + 'training_log.txt').read().splitlines()]
 	if options.ntrees: model_info = [m[:2]+[str(options.ntrees)]+m[3:] if idx > 0 else m \
 	for idx, m in enumerate(model_info)]
 	model_info = {l[0] : l for l in model_info}
@@ -143,7 +143,7 @@ def get_Models():
 		if options.p_filt:
 			try:
 				if float(model_info[row[-1]][train_row_idx].split(',')[0]) < perf_threshold: continue
-			except ValueError: continue
+			except (KeyError, ValueError): continue
 		#if passes all filters then add to mid->uniprot dictionary
 		try: mid_uniprots[row[-1]].append(row)
 		except KeyError: mid_uniprots[row[-1]] = [row]
