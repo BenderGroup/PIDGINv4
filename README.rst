@@ -1,5 +1,7 @@
 Prediction IncluDinG INactivity (PIDGIN) Version 4
-========================================
+=======================================
+
+Please note that we are currently (9th June 2021) in the process of updating the models and files to the ChEMBL28 release. 
 
 |License| |docstatus| |betarelease|
 
