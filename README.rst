@@ -1,7 +1,7 @@
 Prediction IncluDinG INactivity (PIDGIN) Version 4
 =======================================
 
-Please note that we are currently (9th June 2021) in the process of updating the models and files to the ChEMBL28 release. 
+Please note that this branch contains scripts/files compatible with the models trained on ChEMBL26 data. Please visit https://pidginv4.readthedocs.io/en/latest/install.html for instructions on how to download and run these models, if they are still required.
 
 |License| |docstatus| |betarelease|
 
