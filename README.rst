@@ -1,4 +1,4 @@
-Prediction IncluDinG INactivity (PIDGIN) Version 4
+Prediction IncluDinG INactivity (PIDGIN) Version 4.2
 =======================================
 
 Please note that we have updated (retrained) PIDGINv4 for the ChEMBL28 release. For more information, including how to use the models trained on ChEMBL26 (v4.1) please visit https://pidginv4.readthedocs.io/en/latest/install.html
