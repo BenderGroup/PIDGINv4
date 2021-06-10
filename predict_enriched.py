@@ -1,8 +1,8 @@
 #Author : Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin 
 #Emails : mat64@cam.ac.uk and lh605@cam.ac.uk
 #Supervisor : Dr. A. Bender
-#All rights reserved 2020
-#Protein Target Prediction using on SAR data from PubChem and ChEMBL_26
+#All rights reserved 2021
+#Protein Target Prediction using on SAR data from PubChem and ChEMBL_28
 #Molecular Descriptors : 2048bit circular Binary Fingerprints (Rdkit) - ECFP_4
 #Dependencies : rdkit, sklearn, standardiser
 
@@ -16,6 +16,8 @@
 #(AD) analysis from: doi.org/10.1186/s13321-016-0182-y
 
 #libraries
+import warnings
+warnings.filterwarnings("ignore",category=DeprecationWarning)
 import os
 import sys
 import bz2
@@ -37,6 +39,7 @@ from scipy.stats import chi2_contingency
 import multiprocessing
 from multiprocessing import Pool
 from optparse import OptionParser
+warnings.filterwarnings("ignore")
 
 #optionparser options
 parser = OptionParser()
