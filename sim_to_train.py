@@ -1,8 +1,8 @@
 #Authors : Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin 
 #Emails : mat64@cam.ac.uk and lh605@cam.ac.uk
 #Supervisor : Dr. A. Bender
-#All rights reserved 2020
-#Protein Target Prediction Tool trained on SARs from PubChem (Mined March 2020) and ChEMBL26
+#All rights reserved 2021
+#Protein Target Prediction Tool trained on SARs from PubChem (Mined April 2021) and ChEMBL28
 #Molecular Descriptors : 2048bit Morgan Binary Fingerprints (Rdkit) - ECFP4
 #Dependencies : rdkit, sklearn, numpy
 
@@ -14,6 +14,7 @@ import cPickle
 import zipfile
 import bz2
 import glob
+import time
 import os
 import sys
 import math
@@ -38,6 +39,7 @@ parser.add_option('-b', '--bioactivity', default=None, type=str, dest='bioactivi
 parser.add_option('-n', '--ncores', default=1, type=int, dest='ncores', help='No. cores (default: 1)')
 parser.add_option('--organism', dest='organism', default=None, type=str, help='Organism filter (multiple can be specified using commas ",")')
 parser.add_option('--orthologues', action='store_true', default=False, dest='ortho', help='Set to use orthologue bioactivity data in model generation')
+parser.add_option('-o',dest='off',default=None,help='Optional output file name', metavar='FILE')
 
 (options, args) = parser.parse_args()
 #check smiles of sdf (if not quit)
@@ -214,6 +216,7 @@ if __name__ == '__main__':
         if options.ortho == True:
 	    models = [modelfile for modelfile in glob.glob(os.path.dirname(os.path.abspath(__file__)) + sep + 'ortho/bioactivity_dataset' + sep + '*.zip')]
 	if options.organism == None:
+                timestr = time.strftime('%Y%m%d-%H%M%S')
 		models_filtered=[]
         	for model_id in models:
                 	model_uniprot = model_id.split('/')[-1].split('.')[0]
@@ -230,10 +233,15 @@ if __name__ == '__main__':
                     	    models_filtered.append(model_id)
 		models=models_filtered
 		model_info = getUniprotInfo()
-                output_name = input_name + '_out_similarity_details.txt'
-                output_name2 = input_name + '_out_similarity_matrix.txt'
+                if options.off:
+                    output_name = options.off+'_similarity_details.txt'
+                    output_name2 = options.off+'_similarity_matrix.txt'
+                else:
+                    output_name = input_name + '_' + timestr + '_out_similarity_details.txt'
+                    output_name2 = input_name + '_' + timestr + '_out_similarity_matrix.txt'
 
         if options.organism is not None:
+                timestr = time.strftime('%Y%m%d-%H%M%S')
 		model_info = getUniprotInfo()
                 models = [mod for mod in models if model_info[mod.split(sep)[-1].split('.')[0]][4] == options.organism]
                 models_filtered=[]
@@ -251,8 +259,12 @@ if __name__ == '__main__':
                     if n_actives>=1:
 			models_filtered.append(model_id)
 		models=models_filtered
-                output_name = input_name + '_out_similarity_details' + '_'+options.organism.replace(' ', '_') + '.txt'
-                output_name2 = input_name + '_out_similarity_matrix' + '_'+options.organism.replace(' ', '_') + '.txt'
+                if options.off:
+                    output_name = options.off+'_similarity_details.txt'
+                    output_name2 = options.off+'_similarity_matrix.txt'
+                else:
+                    output_name = input_name + '_' + timestr +'_out_similarity_details' + '_'+options.organism.replace(' ', '_') + '.txt'
+                    output_name2 = input_name + '_' + timestr + '_out_similarity_matrix' + '_'+options.organism.replace(' ', '_') + '.txt'
                 print ' Predicting for organism : ' + desired_organism
         print ' Total Number of Classes : ' + str(len(models_filtered))
         out_file = open(output_name, 'w')

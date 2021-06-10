@@ -1,7 +1,7 @@
 Prediction IncluDinG INactivity (PIDGIN) Version 4
 =======================================
 
-Please note that we are currently (9th June 2021) in the process of updating the models and files to the ChEMBL28 release. 
+Please note that we have updated (retrained) PIDGINv4 for the ChEMBL28 release. For more information, including how to use the models trained on ChEMBL26 (v4.1) please visit https://pidginv4.readthedocs.io/en/latest/install.html
 
 |License| |docstatus| |betarelease|
 
@@ -22,7 +22,7 @@ Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity d
 * Disease information from `DisGeNET`_
 * Target/pathway/disease enrichment calculated using Fisher's exact test and the Chi-squared test
 
-Details for sizes across all activity cut-offs:
+Details for sizes across all activity cut-offs (NB this is for ChEMBL26, and needs to be updated to reflect the latest models):
 
 +------------------------------------------------+-------------------------+---------------------------+
 |                                                | Without orthologues     | With orthologues          |

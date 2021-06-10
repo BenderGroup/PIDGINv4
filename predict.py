@@ -1,8 +1,8 @@
 #Authors : Maria-Anna Trapotsi, Layla Hosseini-Gerami and Lewis Mervin
 #Contact: mat64@cam.ac.uk and lh605@cam.ac.uk
 #Supervisor : Dr. A. Bender
-#All rights reserved 2020
-#Protein Target Prediction using on SAR data from PubChem and ChEMBL_26
+#All rights reserved 2021
+#Protein Target Prediction using SAR data from PubChem and ChEMBL_28
 #Molecular Descriptors : 2048bit circular Binary Fingerprints (Rdkit) - ECFP_4
 #Dependencies : rdkit, sklearn, standardiser
 
@@ -37,6 +37,10 @@ from rdkit import DataStructs
 from rdkit.Chem import AllChem
 from rdkit.Chem import Descriptors
 from scipy.stats import percentileofscore
+
+# suppress warnings
+import warnings
+warnings.filterwarnings("ignore")
 
 #optionparser options
 parser = OptionParser()
@@ -442,10 +446,10 @@ def writeOutResults(results, mode='predictions'):
 		out_desc += 'applicability domain SMILES '
 	else:
 		out_desc += 'predictions '
-	if options.off: prefix = options.off
-	else: prefix = options.inf
+        prefix = options.inf
 	timestr = time.strftime('%Y%m%d-%H%M%S')
-	output_name = prefix + '_out_' + mode + '_' + timestr + '.txt'
+        if options.off: output_name = options.off
+        else: output_name = prefix + '_out_' + timestr + mode + '.txt'
 	print ' Writing ' + out_desc + 'to file: ' + output_name
 	with open(output_name, 'wb') as out_file:
 		out_writer = csv.writer(out_file, delimiter='\t')
