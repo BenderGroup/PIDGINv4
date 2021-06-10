@@ -38,8 +38,6 @@ Documentation Usage
 Coming soon...
 
     * Parallel SDF import
-    * Enrichment anaylsis for two files
-    * Detailed similarity to training set analysis
     * 3D E3FP_ fingerprints
 
 .. include:: ../substitutions.rst
