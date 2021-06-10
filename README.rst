@@ -22,7 +22,7 @@ Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity d
 * Disease information from `DisGeNET`_
 * Target/pathway/disease enrichment calculated using Fisher's exact test and the Chi-squared test
 
-Details for sizes across all activity cut-offs:
+Details for sizes across all activity cut-offs (NB this is for ChEMBL26, and needs to be updated to reflect the latest models):
 
 +------------------------------------------------+-------------------------+---------------------------+
 |                                                | Without orthologues     | With orthologues          |
