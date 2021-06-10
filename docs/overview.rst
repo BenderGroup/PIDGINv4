@@ -4,7 +4,7 @@ Overview of PIDGINv4
 Introduction
 ------------
 
-Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity data from PubChem_ (extracted Mar 2020) and ChEMBL_ (version 26), using the RDKit_ and Scikit-learn_, which employ a modification of the reliability-density neighbourhood Applicability Domain (AD) analysis by Aniceto [1]_. This project is the sucessor to PIDGIN `version 1`_ [2]_ and PIDGIN `version 2`_ [3]_. This is the updated and retrained version of PIDGIN `version 3`_ Target prediction with extended NCBI pathway and DisGeNET disease enrichment calculation is available as implemented in [4]_.
+Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity data from PubChem_ (extracted Mar 2021) and ChEMBL_ (version 28), using the RDKit_ and Scikit-learn_, which employ a modification of the reliability-density neighbourhood Applicability Domain (AD) analysis by Aniceto [1]_. This project is the sucessor to PIDGIN `version 1`_ [2]_ and PIDGIN `version 2`_ [3]_. This is the updated and retrained version of PIDGIN `version 3`_ Target prediction with extended NCBI pathway and DisGeNET disease enrichment calculation is available as implemented in [4]_.
 
 * Molecular Descriptors : `2048bit RDKit Extended Connectivity FingerPrints`_ (ECFP) [5]_
 * Algorithm: `Random Forests`_ with dynamic number of trees (see docs for details), class weight = 'balanced', sample weight = ratio Inactive:Active
@@ -14,7 +14,7 @@ Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity d
 * Disease information from `DisGeNET`_
 * Target/pathway/disease enrichment calculated using Fisher's exact test and the Chi-squared test
 
-Details for sizes across all activity cut-off's:
+Details for sizes across all activity cut-off's (needs to be updated for new version):
 
 +------------------------------------------------+-------------------------+---------------------------+
 |                                                | Without orthologues     | With orthologues          |
