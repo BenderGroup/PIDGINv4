@@ -269,6 +269,7 @@ def importQuerySmiles(in_file):
 		    current_end += len(result[0])
 		    processed_mol += result[1]
                 except:
+                    current_end += len(result[0])
                     continue
 	sys.stdout.write(' Processing Molecules for ' + in_file + ': %3d%%\r' % float(100))
 	sys.stdout.flush()
