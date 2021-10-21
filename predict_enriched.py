@@ -264,9 +264,12 @@ def importQuerySmiles(in_file):
 		percent = (float(i)/float(len(chunked_smiles)))*100 + 1
 		sys.stdout.write(' Processing Molecules for ' + in_file + ': %3d%%\r' % percent)
 		sys.stdout.flush()
-		matrix[current_end:current_end+len(result[0]), :] = result[0]
-		current_end += len(result[0])
-		processed_mol += result[1]
+                try:
+		    matrix[current_end:current_end+len(result[0]), :] = result[0]
+		    current_end += len(result[0])
+		    processed_mol += result[1]
+                except:
+                    continue
 	sys.stdout.write(' Processing Molecules for ' + in_file + ': %3d%%\r' % float(100))
 	sys.stdout.flush()
 	pool.close()
