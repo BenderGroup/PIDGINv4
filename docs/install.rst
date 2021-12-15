@@ -32,7 +32,7 @@ Follow these steps on Linux/OSX:
 
 If you encounter an issue (usually occurs when installing the environment on non-Linux systems) try the following:
 
-``conda create -c rdkit -c conda-forge --name pidgin3_env python=2.7 rdkit scikit-learn=0.19.0 pydot graphviz standardiser statsmodels``
+``conda create -c rdkit -c conda-forge --name pidgin4_env python=2.7 rdkit scikit-learn=0.19.0 pydot graphviz standardiser statsmodels``
 
 3. Now run: ``source activate pidgin4_env`` (This activates the PIDGINv4 virtual environment. N.B This is required for each new terminal session in order to run PIDGIN in the future)
 
