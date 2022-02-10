@@ -1,7 +1,7 @@
 Prediction IncluDinG INactivity (PIDGIN) Version 4.2
 =======================================
 
-UPDATE FEB 2022: Please note that presently the orthologue models are not correct (--orthologues option) as they only output results at the 100uM threshold - we hope to fix this in the coming weeks. The non-orthologue models are now correct, so please download the new model files from https://tinyurl.com/noorthoFEB22 and remove the old no_ortho directory - see the Docs for full installation instructions.
+UPDATE FEB 2022: Please note that presently the orthologue models are not correct (--orthologues option) as they only output results at the 100uM threshold - we hope to fix this in the coming weeks. The non-orthologue models are now correct, so please download the new model files from https://tinyurl.com/noorthoFEB22 and remove the old no_ortho directory - see the ReadtheDocs_ for full installation instructions.
 
 |License| |docstatus| |betarelease|
 
