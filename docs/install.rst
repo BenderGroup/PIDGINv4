@@ -38,11 +38,11 @@ If you encounter an issue (usually occurs when installing the environment on non
 
 4. Navigate the directory you wish to install PIDGINv4 and in Mac/Linux terminal run ``git clone https://github.com/BenderGroup/PIDGINv4.git`` (recommended) or download/extract the zip from `GitHub`_ webpage (not recommended due to inability to pull updates)
 
-5. (17GB) Download and unzip `no_ortho.zip`_ (md5sum: bddc0794bd8d04e106fe8f9e4b9d283) into the PIDGINv4 main directory (leave all subsequent files compressed)
+5. Download and unzip `no_ortho.zip`_ (md5sum: 8f98755fb0a18f67a2ca5bb047179b50) into the PIDGINv4 main directory (leave all subsequent files compressed)
 
-6. (optional 43GB) Models are also available when mapping data between orthologues, as in [1]_. N.B The files are 43GB and many models are based solely on orthologue data. To include this functionality, download `ortho.zip`_ (md5sum: 58db44625f7906ef17f3d79537771aa3) to the PIDGINv4 main directory and unzip `ortho.zip`_ (leave all subsequent files compressed)
+UPDATE FEB 22: The orthologue models are currently being corrected due to a bug where all predictions were made at 100uM. The updated model files will be available soon - for now, please only use the no-ortho models above.
 
-* N.B Depending on bandwidth, Step 5/6 may take some time
+* N.B Depending on bandwidth, Step 5 may take some time
 
 NOTE: For the older (ChEMBL 26) models, please download and unzip `no_ortho_ChEMBL26.zip`_ and/or `ortho_ChEMBL26.zip`_ ensuring you clone the ChEMBL26 branch of PIDGINv4 (https://github.com/BenderGroup/PIDGINv4/tree/ChEMBL_26) and move the model directory/s to your local PIDGIN ChEMBL26 directory.
 
