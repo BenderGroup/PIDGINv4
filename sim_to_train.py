@@ -275,7 +275,10 @@ if __name__ == '__main__':
         out_file.write('Uniprot\tPref_Name\tGene ID\tTarget_Class\tOrganism\tNear_Neighbor_ChEMBLID\tNear_Neighbor_Smiles\tNear_Neighbor_Bioactive_organism\tNear_Neighbor_conf_score\tNN_activity\tNN_Units\tInput_Compound\tSimilarity\n')
         for row in sorted(sims_results,reverse=True):
             try:
-                out_file.write('\t'.join(map(str,model_info[row[1]][0:5]))+ '\t' + '\t'.join(map(str,row[4:6]))+'\t'+str(row[3])+'\t'+str(row[7])+'\t'+str(row[6])+'\t'+str(row[8])+'\t'+str(row[15])+'\t'+str(row[0])+ '\n')
+                if row[6] in ['Active','active']:
+                    out_file.write('\t'.join(map(str,model_info[row[1]][0:5]))+ '\t' + '\t'.join(map(str,row[4:6]))+'\t'+str(row[3])+'\t'+str(row[7])+'\t'+str(row[6])+'\t'+str(row[8])+'\t'+str(row[15])+'\t'+str(row[0])+ '\n')
+                else:
+                    out_file.write('\t'.join(map(str,model_info[row[1]][0:5]))+ '\t' + '\t'.join(map(str,row[4:6]))+'\t'+str(row[3])+'\t'+str(row[6])+'\t'+str(row[9])+'\t'+str(row[7])+'\t'+str(row[15])+'\t'+str(row[0])+ '\n')
             except:
                 continue
         print '\n Wrote Results to: ' + output_name
