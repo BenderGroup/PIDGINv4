@@ -3,7 +3,8 @@ Setup and Installation
 
 Development and documentation occurs on GitHub_.
 
-PIDGIN is currently only compatible with Python 2.7.x.
+PIDGIN is currently only compatible with Python 2.7.x. but it runs under Anaconda 3 installations as long as the environment is set up with Python 2.7 (see  installation instructions below).
+
 It also has the following dependencies:
 
 Required dependencies
@@ -22,7 +23,7 @@ Install with Conda
 
 Follow these steps on Linux/OSX:
 
-1. ``Download and install Anaconda from https://www.continuum.io/downloads``
+1. Download and install Anaconda from https://www.continuum.io/downloads
 
 2. Open terminal in Mac/Linux and run ``conda env create -f pidgin4_env.yml --name pidgin4_env``
 
