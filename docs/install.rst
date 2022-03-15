@@ -22,7 +22,7 @@ Install with Conda
 
 Follow these steps on Linux/OSX:
 
-1. ``Download and install Anaconda2 for Python 2.7 from https://www.continuum.io/downloads``
+1. ``Download and install Anaconda from https://www.continuum.io/downloads``
 
 2. Open terminal in Mac/Linux and run ``conda env create -f pidgin4_env.yml --name pidgin4_env``
 
@@ -38,67 +38,11 @@ If you encounter an issue (usually occurs when installing the environment on non
 
 4. Navigate the directory you wish to install PIDGINv4 and in Mac/Linux terminal run ``git clone https://github.com/BenderGroup/PIDGINv4.git`` (recommended) or download/extract the zip from `GitHub`_ webpage (not recommended due to inability to pull updates)
 
-5. Download and unzip `no_ortho.zip`_ (md5sum: 8f98755fb0a18f67a2ca5bb047179b50) into the PIDGINv4 main directory (leave all subsequent files compressed)
-
-UPDATE FEB 22: The orthologue models are currently being corrected due to a bug where all predictions were made at 100uM. The updated model files will be available soon - for now, please only use the no-ortho models above.
+5. Download and unzip the no_ortho_mar22.tar.gz https://doi.org/10.6084/m9.figshare.19108382.v1 (md5sum: dc146e69c8f1638e3741ff7900a97cf3) into the PIDGINv4 main directory to form the no_ortho/ directory (leave all subsequent files compressed)
 
 * N.B Depending on bandwidth, Step 5 may take some time
 
-NOTE: For the older (ChEMBL 26) models, please download and unzip `no_ortho_ChEMBL26.zip`_ and/or `ortho_ChEMBL26.zip`_ ensuring you clone the ChEMBL26 branch of PIDGINv4 (https://github.com/BenderGroup/PIDGINv4/tree/ChEMBL_26) and move the model directory/s to your local PIDGIN ChEMBL26 directory.
-
-
-Filetree structure
-~~~~~~~~~~~~~~~~~~
-
-Once the models are downloaded and the main zip uncompressed, you should find the 
-following filetree structure within the PIDGINv4 directory (located for this snippet at
-``$PV4``) if both the optional orthologs (ortho) and models without orthologs (no_ortho)
-files are used:
-
-.. code-block:: shell-session
-
-	$PV4 tree -L 2
-	.
-	├── biosystems.txt
-	├── DisGeNET_diseases.txt
-	├── docs
-	│   ├── conf.py
-	│   ├── dev
-	│   ├── index.rst
-	│   ├── install.rst
-	│   ├── make.bat
-	│   ├── Makefile
-	│   ├── overview.rst
-	│   ├── substitutions.rst
-	│   └── usage
-	├── examples
-	│   ├── test2.smi
-	│   └── test.smi
-	├── LICENSE
-	├── nontoxic_background.csv
-	├── no_ortho
-	│   ├── ad_analysis
-	│   ├── bioactivity_dataset
-	│   ├── pkls
-	│   ├── training_log.txt
-	│   ├── training_results
-	│   └── uniprot_information.txt
-	├── no_ortho.zip
-	├── ortho
-	│   ├── ad_analysis
-	│   ├── bioactivity_dataset
-	│   ├── check_ad2.py
-	│   ├── check_ad.py
-	│   ├── pkls
-	│   ├── training_log.txt
-	│   ├── training_results
-	│   └── uniprot_information.txt
-	├── ortho.zip
-	├── pidgin4_env.yml
-	├── sim_to_train.py
-	├── predict_enriched.py
-	├── predict.py
-	└── README.rst
+NOTE: For older models and orthologue models, please contact us.
 
 .. [1] |mervin2018|
 
