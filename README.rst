@@ -1,7 +1,10 @@
 Prediction IncluDinG INactivity (PIDGIN) Version 4.2
 =======================================
 
-UPDATE FEB 2022: Please note that presently the orthologue models are not correct (--orthologues option) as they only output results at the 100uM threshold - we hope to fix this in the coming weeks. The non-orthologue models are now correct, so please download the new model files from https://tinyurl.com/noorthoFEB22 and remove the old no_ortho directory - see the ReadtheDocs_ for full installation instructions.
+UPDATE MAR 2022: The new no-orthologue models can be downloaded at https://doi.org/10.6084/m9.figshare.19108382.v1 - remove the old no_ortho directory, and download and unzip the folder in the PIDGINv4 root directory. See the ReadtheDocs_ for full installation instructions.
+
+For now, the orthologue (--ortho) command is deprecated - use the old models at your own risk.
+If you require the orthologue models for your research, please get in touch!
 
 |License| |docstatus| |betarelease|
 
@@ -22,7 +25,7 @@ Protein target prediction using `Random Forests`_ (RFs) trained on bioactivity d
 * Disease information from `DisGeNET`_
 * Target/pathway/disease enrichment calculated using Fisher's exact test and the Chi-squared test
 
-Details for sizes across all activity cut-offs (NB this is for ChEMBL26, and needs to be updated to reflect the latest models):
+Details for sizes across all activity cut-offs
 
 +------------------------------------------------+-------------------------+---------------------------+
 |                                                | Without orthologues     | With orthologues          |
